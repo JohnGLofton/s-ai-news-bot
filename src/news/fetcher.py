@@ -41,28 +41,33 @@ class NewsFetcher:
             "BBC Education": "https://feeds.bbci.co.uk/news/education/rss.xml",
             "Times Education Supplement": "https://www.tes.com/magazine/rss",
             "Wonkhe": "https://wonkhe.com/feed/",
-            "Google News UK University": "https://news.google.com/rss/search?q=UK+university+international+students+UCAS+2025&hl=en&gl=GB&ceid=GB:en",
-            "Google News Oxford Cambridge": "https://news.google.com/rss/search?q=Oxford+Cambridge+Imperial+UCL+LSE+admission&hl=en&gl=GB&ceid=GB:en",
-            "Google News UK Education Policy": "https://news.google.com/rss/search?q=UK+student+visa+graduate+route+international&hl=en&gl=GB&ceid=GB:en",
+            "Google News UK University": "https://news.google.com/rss/search?q=UK+university+international+students+UCAS+2026&hl=en&gl=GB&ceid=GB:en",
+            "Google News Oxford Cambridge": "https://news.google.com/rss/search?q=Oxford+Cambridge+Imperial+UCL+LSE+admission+2026&hl=en&gl=GB&ceid=GB:en",
+            "Google News UK Education Policy": "https://news.google.com/rss/search?q=UK+higher+education+international+students+2026&hl=en&gl=GB&ceid=GB:en",
+            "Google News UK Student Visa": "https://news.google.com/rss/search?q=UK+student+visa+graduate+route+international&hl=en&gl=GB&ceid=GB:en",
+            "Google News UK University Fees": "https://news.google.com/rss/search?q=UK+university+tuition+fees+international+students&hl=en&gl=GB&ceid=GB:en",
 
             # ── Language Tests ──
             "Duolingo Blog": "https://blog.duolingo.com/rss/",
             "College Board (SAT/ACT)": "https://newsroom.collegeboard.org/rss.xml",
-            "Google News IELTS": "https://news.google.com/rss/search?q=IELTS+score+policy+change+2025&hl=en&gl=US&ceid=US:en",
-            "Google News TOEFL": "https://news.google.com/rss/search?q=TOEFL+ETS+score+requirement+2025&hl=en&gl=US&ceid=US:en",
+            "Google News IELTS": "https://news.google.com/rss/search?q=IELTS+score+policy+university+2026&hl=en&gl=US&ceid=US:en",
+            "Google News TOEFL": "https://news.google.com/rss/search?q=TOEFL+ETS+score+requirement+2026&hl=en&gl=US&ceid=US:en",
             "Google News SAT ACT": "https://news.google.com/rss/search?q=SAT+ACT+test+optional+college+admission&hl=en&gl=US&ceid=US:en",
             "Google News Duolingo Test": "https://news.google.com/rss/search?q=Duolingo+English+Test+university+acceptance&hl=en&gl=US&ceid=US:en",
 
             # ── University Rankings ──
             "QS World Rankings News": "https://www.qs.com/feed/",
-            "Google News QS Rankings": "https://news.google.com/rss/search?q=QS+world+university+rankings+2025&hl=en&gl=US&ceid=US:en",
-            "Google News THE Rankings": "https://news.google.com/rss/search?q=Times+Higher+Education+world+university+rankings&hl=en&gl=US&ceid=US:en",
+            "Google News QS Rankings": "https://news.google.com/rss/search?q=QS+world+university+rankings+2026&hl=en&gl=US&ceid=US:en",
+            "Google News THE Rankings": "https://news.google.com/rss/search?q=Times+Higher+Education+world+university+rankings+2026&hl=en&gl=US&ceid=US:en",
+            "Google News University Scholarships": "https://news.google.com/rss/search?q=international+scholarship+university+2026&hl=en&gl=US&ceid=US:en",
 
             # ── Visa & Immigration Policy ──
-            "US Student Visa News": "https://news.google.com/rss/search?q=F1+visa+OPT+STEM+international+students+US&hl=en&gl=US&ceid=US:en",
-            "UK Student Visa News": "https://news.google.com/rss/search?q=UK+student+visa+Tier4+Graduate+Route+2025&hl=en&gl=GB&ceid=GB:en",
-            "Australia Student Visa": "https://news.google.com/rss/search?q=Australia+student+visa+international+students&hl=en&gl=AU&ceid=AU:en",
-            "Canada Student Visa": "https://news.google.com/rss/search?q=Canada+study+permit+international+students+2025&hl=en&gl=CA&ceid=CA:en",
+            "US Student Visa News": "https://news.google.com/rss/search?q=F1+visa+OPT+STEM+international+students+US+2026&hl=en&gl=US&ceid=US:en",
+            "US Immigration Student Policy": "https://news.google.com/rss/search?q=US+immigration+policy+international+students+2026&hl=en&gl=US&ceid=US:en",
+            "UK Student Visa News": "https://news.google.com/rss/search?q=UK+student+visa+Tier4+Graduate+Route+2026&hl=en&gl=GB&ceid=GB:en",
+            "UK Immigration Policy": "https://news.google.com/rss/search?q=UK+immigration+international+students+visa+policy&hl=en&gl=GB&ceid=GB:en",
+            "Australia Student Visa": "https://news.google.com/rss/search?q=Australia+student+visa+international+students+2026&hl=en&gl=AU&ceid=AU:en",
+            "Canada Student Visa": "https://news.google.com/rss/search?q=Canada+study+permit+international+students+2026&hl=en&gl=CA&ceid=CA:en",
 
             # ── International General Headlines ──
             "Reuters Top News": "https://feeds.reuters.com/reuters/topNews",

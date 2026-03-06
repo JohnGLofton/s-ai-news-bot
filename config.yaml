@@ -17,21 +17,24 @@ news:
 
       You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 37 of the highest-quality items.
 
-      ### SELECTION TARGETS BY CATEGORY (STRICTLY FOLLOW):
+      ### MANDATORY SELECTION TARGETS BY CATEGORY:
       - Exactly 5 items: Major international headline news (global politics, finance, technology - NOT study-abroad related)
       - Exactly 5 items: Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
-      - Exactly 10 items: US university news - famous US universities headlines, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
-      - Exactly 10 items: UK university news - famous UK universities headlines, international student admissions, language tests
-      - Exactly 7 items: Study abroad visa and immigration policy news
-      - Exactly 5 items: Other international education headline news (rankings, scholarships, etc.)
+      - Exactly 10 items: US university news - US universities, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
+      - Exactly 10 items: UK university news - UK universities (Oxford, Cambridge, Imperial, UCL, LSE etc.), UK international students, UK education policy
+      - Exactly 7 items: Study abroad visa and immigration policy news (F1 visa, OPT, UK student visa, Australia/Canada study permit)
+      - Exactly 5 items: Other international education headline news (rankings, scholarships, non-US/UK universities)
 
       ### CRITICAL RULES:
-      - For 国际新闻 category: select general world news ONLY (NOT education/study abroad)
-      - For 国内新闻 category: select China domestic news ONLY (NOT education/study abroad)
+      - For 国际新闻: select general world news ONLY (NOT education/study abroad)
+      - For 国内新闻: select China domestic news ONLY (NOT education/study abroad)
       - Do NOT put the same news in multiple categories
-      - If there are not enough items in a category, still select the best available
+      - You MUST fill each category even if you need to use loosely related items
+      - For UK category: use ANY news from UK sources (BBC, Guardian, TES, Wonkhe) or mentioning UK universities
+      - For Visa category: use ANY news about immigration, visa policy, OPT, work permits for students
+      - For Other Education: use rankings, scholarships, non-US/UK study destinations, education technology
+      - If a category has fewer ideal matches, pick the closest available items from the news pool
       - Prioritize headline, trending, and breaking news
-      - Prefer primary sources and official announcements
 
       ### OUTPUT FORMAT:
       Return ONLY a JSON array of exactly 37 selected news IDs. No explanations, no markdown, just the JSON array.
@@ -39,7 +42,7 @@ news:
       Example format:
       ["INT-1", "INT-5", "DOM-2", "INT-12", ...]
 
-      CRITICAL: Select exactly 37 items total.
+      CRITICAL: You MUST select exactly 37 items total, with items spread across ALL 6 categories.
 
   # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
@@ -67,6 +70,12 @@ news:
       - 留学签证与移民政策: 7 items - visa policy, immigration updates for students
       - 其他国际教育新闻: 5 items - rankings, scholarships, other education news
 
+      ## CRITICAL RULES:
+      - ALL 6 category headers MUST appear in the output, even if items are scarce
+      - If a category has fewer items than the target, summarize ALL available items for that category (do NOT write "暂无" or skip it)
+      - Redistribute any extra items from one category to fill another if needed
+      - NEVER leave a category section empty - always include at least 1 news item under each header
+
       ## CONTENT REQUIREMENTS:
 
       For each news item provide:
@@ -93,6 +102,7 @@ news:
       ❌ Skipping any news items
       ❌ Adding count numbers like （5条） to headers
       ❌ Adding extra categories
+      ❌ Writing "暂无相关新闻" or leaving any category empty
 
 logging:
   level: INFO
