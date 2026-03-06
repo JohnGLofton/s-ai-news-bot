@@ -32,64 +32,64 @@ class NewsFetcher:
             "Diverse Education": "https://diverseeducation.com/feed/",
             "EdSurge": "https://www.edsurge.com/news.rss",
             "Higher Ed Dive": "https://www.highereddive.com/feeds/news/",
-            "Google News US University": "https://news.google.com/rss/search?q=US+university+international+students+admission+2025&hl=en&gl=US&ceid=US:en",
-            "Google News Harvard MIT Stanford": "https://news.google.com/rss/search?q=Harvard+MIT+Stanford+Yale+Columbia+admission&hl=en&gl=US&ceid=US:en",
-            "Google News US Education Policy": "https://news.google.com/rss/search?q=US+higher+education+policy+international+students&hl=en&gl=US&ceid=US:en",
+            "Google News US University": "https://news.google.com/rss/search?q=US+university+international+students+admission&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News Harvard MIT Stanford": "https://news.google.com/rss/search?q=Harvard+MIT+Stanford+Yale+Columbia+admission&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News US Education Policy": "https://news.google.com/rss/search?q=US+higher+education+policy+international+students&hl=en&gl=US&ceid=US:en&as_qdr=d2",
 
             # ── UK University & Higher Ed ──
             "The Guardian Education": "https://www.theguardian.com/education/rss",
             "BBC Education": "https://feeds.bbci.co.uk/news/education/rss.xml",
             "Times Education Supplement": "https://www.tes.com/magazine/rss",
             "Wonkhe": "https://wonkhe.com/feed/",
-            "Google News UK University": "https://news.google.com/rss/search?q=UK+university+international+students+UCAS+2026&hl=en&gl=GB&ceid=GB:en",
-            "Google News Oxford Cambridge": "https://news.google.com/rss/search?q=Oxford+Cambridge+Imperial+UCL+LSE+admission+2026&hl=en&gl=GB&ceid=GB:en",
-            "Google News UK Education Policy": "https://news.google.com/rss/search?q=UK+higher+education+international+students+2026&hl=en&gl=GB&ceid=GB:en",
-            "Google News UK Student Visa": "https://news.google.com/rss/search?q=UK+student+visa+graduate+route+international&hl=en&gl=GB&ceid=GB:en",
-            "Google News UK University Fees": "https://news.google.com/rss/search?q=UK+university+tuition+fees+international+students&hl=en&gl=GB&ceid=GB:en",
+            "Google News UK University": "https://news.google.com/rss/search?q=UK+university+international+students+UCAS&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "Google News Oxford Cambridge": "https://news.google.com/rss/search?q=Oxford+Cambridge+Imperial+UCL+LSE+admission&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "Google News UK Education Policy": "https://news.google.com/rss/search?q=UK+higher+education+international+students&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "Google News UK Student Visa": "https://news.google.com/rss/search?q=UK+student+visa+graduate+route+international&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "Google News UK University Fees": "https://news.google.com/rss/search?q=UK+university+tuition+fees+international+students&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
 
             # ── Language Tests ──
             "Duolingo Blog": "https://blog.duolingo.com/rss/",
             "College Board (SAT/ACT)": "https://newsroom.collegeboard.org/rss.xml",
-            "Google News IELTS": "https://news.google.com/rss/search?q=IELTS+score+policy+university+2026&hl=en&gl=US&ceid=US:en",
-            "Google News TOEFL": "https://news.google.com/rss/search?q=TOEFL+ETS+score+requirement+2026&hl=en&gl=US&ceid=US:en",
-            "Google News SAT ACT": "https://news.google.com/rss/search?q=SAT+ACT+test+optional+college+admission&hl=en&gl=US&ceid=US:en",
-            "Google News Duolingo Test": "https://news.google.com/rss/search?q=Duolingo+English+Test+university+acceptance&hl=en&gl=US&ceid=US:en",
+            "Google News IELTS": "https://news.google.com/rss/search?q=IELTS+score+policy+university&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News TOEFL": "https://news.google.com/rss/search?q=TOEFL+ETS+score+requirement&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News SAT ACT": "https://news.google.com/rss/search?q=SAT+ACT+test+optional+college+admission&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News Duolingo Test": "https://news.google.com/rss/search?q=Duolingo+English+Test+university+acceptance&hl=en&gl=US&ceid=US:en&as_qdr=d2",
 
             # ── University Rankings ──
             "QS World Rankings News": "https://www.qs.com/feed/",
-            "Google News QS Rankings": "https://news.google.com/rss/search?q=QS+world+university+rankings+2026&hl=en&gl=US&ceid=US:en",
-            "Google News THE Rankings": "https://news.google.com/rss/search?q=Times+Higher+Education+world+university+rankings+2026&hl=en&gl=US&ceid=US:en",
-            "Google News University Scholarships": "https://news.google.com/rss/search?q=international+scholarship+university+2026&hl=en&gl=US&ceid=US:en",
+            "Google News QS Rankings": "https://news.google.com/rss/search?q=QS+world+university+rankings&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News THE Rankings": "https://news.google.com/rss/search?q=Times+Higher+Education+world+university+rankings&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "Google News University Scholarships": "https://news.google.com/rss/search?q=international+scholarship+university&hl=en&gl=US&ceid=US:en&as_qdr=d2",
 
             # ── Visa & Immigration Policy ──
-            "US Student Visa News": "https://news.google.com/rss/search?q=F1+visa+OPT+STEM+international+students+US+2026&hl=en&gl=US&ceid=US:en",
-            "US Immigration Student Policy": "https://news.google.com/rss/search?q=US+immigration+policy+international+students+2026&hl=en&gl=US&ceid=US:en",
-            "UK Student Visa News": "https://news.google.com/rss/search?q=UK+student+visa+Tier4+Graduate+Route+2026&hl=en&gl=GB&ceid=GB:en",
-            "UK Immigration Policy": "https://news.google.com/rss/search?q=UK+immigration+international+students+visa+policy&hl=en&gl=GB&ceid=GB:en",
-            "Australia Student Visa": "https://news.google.com/rss/search?q=Australia+student+visa+international+students+2026&hl=en&gl=AU&ceid=AU:en",
-            "Canada Student Visa": "https://news.google.com/rss/search?q=Canada+study+permit+international+students+2026&hl=en&gl=CA&ceid=CA:en",
+            "US Student Visa News": "https://news.google.com/rss/search?q=F1+visa+OPT+STEM+international+students+US&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "US Immigration Student Policy": "https://news.google.com/rss/search?q=US+immigration+policy+international+students&hl=en&gl=US&ceid=US:en&as_qdr=d2",
+            "UK Student Visa News": "https://news.google.com/rss/search?q=UK+student+visa+Tier4+Graduate+Route&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "UK Immigration Policy": "https://news.google.com/rss/search?q=UK+immigration+international+students+visa+policy&hl=en&gl=GB&ceid=GB:en&as_qdr=d2",
+            "Australia Student Visa": "https://news.google.com/rss/search?q=Australia+student+visa+international+students&hl=en&gl=AU&ceid=AU:en&as_qdr=d2",
+            "Canada Student Visa": "https://news.google.com/rss/search?q=Canada+study+permit+international+students&hl=en&gl=CA&ceid=CA:en&as_qdr=d2",
 
             # ── International General Headlines ──
             "Reuters Top News": "https://feeds.reuters.com/reuters/topNews",
             "BBC World News": "https://feeds.bbci.co.uk/news/world/rss.xml",
             "Associated Press": "https://rsshub.app/apnews/topics/apf-topnews",
-            "Financial Times Education": "https://news.google.com/rss/search?q=education+university+global&hl=en&gl=US&ceid=US:en",
+            "Financial Times Education": "https://news.google.com/rss/search?q=education+university+global&hl=en&gl=US&ceid=US:en&as_qdr=d2",
         }
 
         # Chinese study abroad news sources (zh)
         self.chinese_feeds = {
             # ── 国内头条（Google News 可在海外服务器访问）──
-            "Google News 中国政治": "https://news.google.com/rss/search?q=中国+政府+政策+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 中国经济": "https://news.google.com/rss/search?q=中国+经济+GDP+贸易+金融&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 中国科技": "https://news.google.com/rss/search?q=中国+科技+人工智能+芯片+互联网&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 中国社会": "https://news.google.com/rss/search?q=中国+社会+民生+热点&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 中美关系": "https://news.google.com/rss/search?q=中美+关系+贸易战+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 中国政治": "https://news.google.com/rss/search?q=中国+政府+政策+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 中国经济": "https://news.google.com/rss/search?q=中国+经济+GDP+贸易+金融&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 中国科技": "https://news.google.com/rss/search?q=中国+科技+人工智能+芯片+互联网&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 中国社会": "https://news.google.com/rss/search?q=中国+社会+民生+热点&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 中美关系": "https://news.google.com/rss/search?q=中美+关系+贸易战+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
             # ── 留学相关 ──
-            "Google News 留学申请": "https://news.google.com/rss/search?q=留学+申请+美国+英国+大学&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 语言考试": "https://news.google.com/rss/search?q=雅思+托福+SAT+ACT+多邻国+留学考试&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 大学排名": "https://news.google.com/rss/search?q=世界大学排名+QS+泰晤士+软科&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 留学政策": "https://news.google.com/rss/search?q=留学政策+学生签证+国际生+OPT&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 美英名校": "https://news.google.com/rss/search?q=哈佛+麻省理工+剑桥+牛津+名校+录取&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 留学申请": "https://news.google.com/rss/search?q=留学+申请+美国+英国+大学&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 语言考试": "https://news.google.com/rss/search?q=雅思+托福+SAT+ACT+多邻国+留学考试&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 大学排名": "https://news.google.com/rss/search?q=世界大学排名+QS+泰晤士+软科&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 留学政策": "https://news.google.com/rss/search?q=留学政策+学生签证+国际生+OPT&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
+            "Google News 美英名校": "https://news.google.com/rss/search?q=哈佛+麻省理工+剑桥+牛津+名校+录取&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
         }
 
         # Japanese AI news sources (ja)
