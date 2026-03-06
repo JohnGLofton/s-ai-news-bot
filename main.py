@@ -14,7 +14,8 @@ from src.notifiers import (
     WebhookNotifier,
     SlackNotifier,
     TelegramNotifier,
-    DiscordNotifier
+    DiscordNotifier,
+    ResendNotifier
 )
 
 
@@ -142,6 +143,17 @@ def main():
                     else:
                         lang_results["failed"].append("discord")
                         logger.warning(f"Discord notification failed for {language.upper()}")
+
+                # Send Resend email notification if enabled
+                if "resend" in notification_methods:
+                    logger.info(f"Sending Resend email notification for {language.upper()}...")
+                    resend_notifier = ResendNotifier()
+                    if resend_notifier.send(news_digest, language=language):
+                        lang_results["sent"].append("resend")
+                        logger.info(f"Resend email notification sent successfully for {language.upper()}")
+                    else:
+                        lang_results["failed"].append("resend")
+                        logger.warning(f"Resend email notification failed for {language.upper()}")
 
                 # Update overall results
                 for method in lang_results["sent"]:

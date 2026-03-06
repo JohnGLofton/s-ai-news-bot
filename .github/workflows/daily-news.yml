@@ -1,9 +1,9 @@
-name: Daily AI News Digest
+name: Daily Study Abroad News Digest
 
 on:
-  # Run daily at 0:00 AM UTC (adjust as needed)
+  # Run daily at 1:00 AM UTC (9:00 AM Beijing Time)
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 1 * * *"
 
   # Allow manual trigger
   workflow_dispatch:
@@ -27,54 +27,52 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Generate and send AI news digest
+      - name: Generate and send study abroad news digest
         env:
-          # All values come from GitHub Repository Secrets
-          # Configure at: Settings → Secrets and variables → Actions → Repository secrets
-
           # ============================================
           # LLM Provider Configuration
           # ============================================
-
-          # Choose your provider: claude, deepseek, gemini, grok, or openai
-          # Set LLM_PROVIDER secret to your choice (default: claude)
-          
           LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
-
-          # API Keys (provide the one you're using)
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-          # Optional: Specify a model (if not set, uses provider's default)
-          # Examples: claude-sonnet-4-5-20250929, deepseek-chat, deepseek-reasoner
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
 
           # ============================================
           # Notification Configuration
+          # Set NOTIFICATION_METHODS=resend to use Resend
           # ============================================
-
-          # Required: Notification methods (comma-separated)
-          # Examples: email, webhook, email,webhook
           NOTIFICATION_METHODS: ${{ secrets.NOTIFICATION_METHODS }}
 
-          # Email Option A: Gmail (Recommended - easiest setup)
-          # Just need your Gmail and an App Password
-          # Get App Password at: https://myaccount.google.com/apppasswords
-          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          # Resend Email (recommended)
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          # Sender address - must be verified in Resend dashboard
+          # Free tier: use onboarding@resend.dev for testing
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+          # Recipient(s) - comma-separated for multiple people
+          # e.g. alice@example.com,bob@example.com
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
 
-          # Optional: Webhook
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          # Gmail fallback (optional)
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
 
-          # Optional: Language (defaults to 'en' if not set)
-          # Supported: en, zh, es, fr, ja, de, ko, pt, ru, ar, hi, it, nl
-          # For multiple languages, separate with commas (e.g., 'en,zh,ja')
-          # The bot will generate and send news for each language separately
+          # Other notification channels (optional)
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+          # ============================================
+          # Language Settings
+          # e.g. en  or  zh  or  en,zh
+          # ============================================
           AI_RESPONSE_LANGUAGE: ${{ secrets.AI_RESPONSE_LANGUAGE }}
+
+          ENABLE_WEB_SEARCH: "false"
 
         run: |
           python main.py

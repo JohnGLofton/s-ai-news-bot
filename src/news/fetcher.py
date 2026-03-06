@@ -16,48 +16,46 @@ class NewsFetcher:
 
     def __init__(self):
         """Initialize the news fetcher"""
-        # RSS feed sources for AI news (reliable sources only)
+        # RSS feed sources for international study abroad news
         self.rss_feeds = {
-            # Major Tech Media
-            "TechCrunch AI": "https://techcrunch.com/tag/artificial-intelligence/feed/",
-            "VentureBeat AI": "https://venturebeat.com/category/ai/feed/",
-            "MIT Technology Review": "https://www.technologyreview.com/feed/",
-            "Ars Technica AI": "https://arstechnica.com/tag/ai/feed/",
-            "Wired AI": "https://www.wired.com/feed/tag/ai/latest/rss",
-            "The Next Web": "https://thenextweb.com/feed",
-            "The Verge AI": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-            "Engadget AI": "https://www.engadget.com/tag/ai/rss.xml",
+            # University Admissions & International Students
+            "Times Higher Education": "https://www.timeshighereducation.com/news/rss.xml",
+            "Inside Higher Ed": "https://www.insidehighered.com/rss.xml",
+            "The PIE News": "https://thepienews.com/feed/",
+            "ICEF Monitor": "https://monitor.icef.com/feed/",
+            "Study International": "https://studyinternational.com/feed/",
 
-            # Official AI Company Blogs
-            "OpenAI Blog": "https://openai.com/blog/rss/",
-            "Google AI Blog": "https://blog.google/technology/ai/rss/",
-            "DeepMind Blog": "https://deepmind.google/blog/rss.xml",
-            "Meta AI Blog": "https://ai.meta.com/blog/rss/",
-            "Microsoft AI Blog": "https://blogs.microsoft.com/ai/feed/",
+            # US University & Policy News
+            "Chronicle of Higher Education": "https://www.chronicle.com/feeds/default",
+            "US News Education": "https://www.usnews.com/rss/education",
+            "Diverse Education": "https://diverseeducation.com/feed/",
 
-            # Research & Academic
-            "arXiv AI": "https://rss.arxiv.org/rss/cs.AI",
-            "arXiv Machine Learning": "https://rss.arxiv.org/rss/cs.LG",
-            "arXiv Computer Vision": "https://rss.arxiv.org/rss/cs.CV",
-            "arXiv NLP": "https://rss.arxiv.org/rss/cs.CL",
+            # UK University News
+            "The Guardian Education": "https://www.theguardian.com/education/rss",
+            "BBC Education": "https://feeds.bbci.co.uk/news/education/rss.xml",
 
-            # Industry Verticals
-            "Healthcare IT News AI": "https://www.healthcareitnews.com/taxonomy/term/31/feed",
-            "Robotics Business Review": "https://www.roboticsbusinessreview.com/feed/",
-            "Autonomous Vehicle News": "https://www.autonomousvehicleinternational.com/feed",
+            # Language Tests News
+            "Duolingo Blog": "https://blog.duolingo.com/rss/",
+            "College Board (SAT/ACT)": "https://newsroom.collegeboard.org/rss.xml",
+
+            # Global University Rankings
+            "QS World Rankings News": "https://www.qs.com/feed/",
+
+            # Immigration & Visa Policy (Google News)
+            "US Student Visa News": "https://news.google.com/rss/search?q=US+student+visa+international+students&hl=en&gl=US&ceid=US:en",
+            "UK Student Visa News": "https://news.google.com/rss/search?q=UK+student+visa+international+students&hl=en&gl=GB&ceid=GB:en",
+            "Google News Study Abroad": "https://news.google.com/rss/search?q=international+students+university+admission&hl=en&gl=US&ceid=US:en",
+            "Google News Language Tests": "https://news.google.com/rss/search?q=IELTS+TOEFL+SAT+ACT+Duolingo+test&hl=en&gl=US&ceid=US:en",
+            "Google News University Rankings": "https://news.google.com/rss/search?q=world+university+rankings+2025&hl=en&gl=US&ceid=US:en",
         }
 
-        # Chinese AI news sources (zh)
+        # Chinese study abroad news sources (zh)
         self.chinese_feeds = {
-            # Tech News Outlets
-            "36Kr (36氪)": "https://36kr.com/feed",
-            "JiQiZhiXin (机器之心)": "https://www.jiqizhixin.com/rss",
-            "Leiphone (雷锋网)": "https://www.leiphone.com/feed",
-            "iFeng Tech (凤凰科技)": "https://tech.ifeng.com/rss/index.xml",
-            "Sina Tech (新浪科技)": "http://rss.sina.com.cn/tech/rollnews.xml",
-            # Google News (fallback)
-            "Google News AI (CN)": "https://news.google.com/rss/search?q=人工智能+AI&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News LLM (CN)": "https://news.google.com/rss/search?q=大模型+GPT+Claude&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 留学申请": "https://news.google.com/rss/search?q=留学+申请+美国+英国+大学&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 语言考试": "https://news.google.com/rss/search?q=雅思+托福+SAT+留学考试&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 大学排名": "https://news.google.com/rss/search?q=世界大学排名+QS+泰晤士&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 留学政策": "https://news.google.com/rss/search?q=留学政策+签证+国际生&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 美英大学": "https://news.google.com/rss/search?q=美国大学+英国大学+国际学生+录取&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
         }
 
         # Japanese AI news sources (ja)

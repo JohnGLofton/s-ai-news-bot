@@ -1,25 +1,11 @@
-# LLM Configuration - Choose your AI model provider
+# Study Abroad News Bot Configuration
 llm:
   # Provider: 'claude', 'deepseek', 'gemini', 'grok', 'openai'
-  # Claude (Anthropic): Excellent quality, higher cost
-  # DeepSeek: Good quality, much lower cost, better Chinese support
-  # Gemini: Fast, multimodal, free tier available
-  # Grok: Advanced reasoning, real-time data
-  # OpenAI: Industry standard, latest models
-  provider: claude
-
-  # Optional: Specify a model (if not set, uses provider's default)
-  # Claude models: claude-sonnet-4-5-20250929, claude-3-5-sonnet-20241022
-  # DeepSeek models: deepseek-chat, deepseek-reasoner
-  # model: claude-sonnet-4-5-20250929
+  provider: deepseek
+  # model: deepseek-chat
 
 news:
-  # Enable web search tool (uses DuckDuckGo API via LLM tool calling)
-  # Note: DuckDuckGo API often returns limited results. RSS feeds are more reliable.
-  # Default: false (recommended to keep disabled)
   enable_web_search: false
-
-  # Maximum news items to fetch per source (fetch more for AI to select from)
   max_items_per_source: 10
 
   # Stage 1: Selection prompt template
@@ -29,15 +15,16 @@ news:
 
       ## YOUR TASK - STAGE 1: NEWS SELECTION
 
-      You are a senior AI industry analyst. Analyze the {total_items} news items above and select exactly 15-20 of the highest-quality items.
+      You are a senior international education consultant and analyst. Analyze the {total_items} news items above and select exactly 15-20 of the highest-quality items relevant to international study abroad.
 
       ### SELECTION CRITERIA:
-      - ✅ Groundbreaking research or technical breakthroughs
-      - ✅ Major product launches or significant updates
-      - ✅ Important policy changes or regulations
-      - ✅ Large funding rounds or M&A activities
-      - ✅ Balanced coverage across categories (LLM, Agents, Research, Products, etc.)
-      - ✅ Include both international and domestic news when available
+      - ✅ US/UK university admissions policies and changes for international students
+      - ✅ Major headline news about international student applications and enrollment trends
+      - ✅ Study abroad visa policies and immigration updates (US F-1, UK Tier 4/Student visa, etc.)
+      - ✅ Language test news: IELTS, TOEFL, SAT, ACT, Duolingo English Test updates and policy changes
+      - ✅ Global university ranking news: QS, Times Higher Education (THE), ARWU updates
+      - ✅ Scholarship and funding opportunities for international students
+      - ✅ Include both international and domestic (language-specific) news when available
       - ✅ Prefer primary sources over secondary reporting
 
       ### OUTPUT FORMAT:
@@ -48,72 +35,52 @@ news:
 
       CRITICAL: Select exactly 15-20 items. No more, no less.
 
-  # Stage 2: Summarization prompt template (complete prompt for creating the digest)
+  # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
   stage2_prompt_template: |
-      You are a senior AI industry analyst. Create a comprehensive, in-depth news digest for the {count} pre-selected news items below.
+      You are a senior international education consultant. Create a comprehensive, in-depth study abroad news digest for the {count} pre-selected news items below.
 
       {selected_news}
 
       ## OUTPUT STRUCTURE:
 
       Organize news items into relevant categories (use only categories that have news):
-      1. **Large Language Models & Foundation Models** - LLM updates, new model releases, benchmarks
-      2. **AI Agents & Autonomous Systems** - Agent frameworks, autonomous AI developments
-      3. **Multimodal AI** - Vision, audio, video AI capabilities
-      4. **Research & Academic Breakthroughs** - Papers, scientific discoveries, new methods
-      5. **Product Launches & Updates** - New products, feature releases, API updates
-      6. **AI Infrastructure & Hardware** - Chips, GPUs, training infrastructure, cloud services
-      7. **Healthcare & Biomedical AI** - Medical AI, drug discovery, diagnostics
-      8. **Robotics & Autonomous Vehicles** - Robots, self-driving, embodied AI
-      9. **Enterprise & Industry Applications** - B2B solutions, industry-specific AI
-      10. **Funding & Market Dynamics** - Investments, acquisitions, valuations
-      11. **Policy & Regulation** - Government policies, AI governance, ethics
-      12. **Open Source & Community** - Open source projects, community developments
+      1. **US University Admissions & International Students** - Application policies, enrollment data, campus news
+      2. **UK University Admissions & International Students** - UCAS updates, university policies, visa news
+      3. **Study Abroad Visa & Immigration Policy** - F-1, Student visa, OPT/STEM OPT, Graduate Route updates
+      4. **Language Tests** - IELTS, TOEFL, SAT, ACT, Duolingo English Test score changes and policies
+      5. **Global University Rankings** - QS, THE, ARWU and other ranking announcements
+      6. **Scholarships & Funding** - New scholarships, grants, financial aid for international students
+      7. **Other International Education News** - Any other relevant study abroad developments
 
       ## CONTENT REQUIREMENTS:
 
       For each news item, provide:
-      1. **Clear Headline**: Informative title that captures the key development
+      1. **Clear Headline**: Informative title capturing the key development
       2. **Analytical Summary (4-6 sentences)**:
          - What happened (core news and context)
-         - Technical details, key specifications, or metrics
-         - Why it matters (industry significance and impact)
-         - Potential implications (future developments, competitive landscape)
+         - Key details, deadlines, requirements, or metrics
+         - Why it matters for international students or applicants
+         - Practical implications or action items for students
       3. **Source Attribution**: Always include as clickable markdown link: [Source Name](URL)
 
       ## WRITING STYLE:
-      - Professional, analytical tone suitable for industry professionals
-      - Include specific numbers, metrics, and data points when available
-      - Keep technical terminology accurate (preserve technical jargon)
-      - Balance accessibility with technical depth
-      - Provide context and analysis, not just reporting facts
-
-      ## EXAMPLE FORMAT:
-
-      ## Large Language Models & Foundation Models
-
-      ### OpenAI Releases GPT-5 with Revolutionary Capabilities
-
-      OpenAI has announced GPT-5, featuring a 10 trillion parameter architecture with unprecedented reasoning abilities. The model demonstrates 40% improvement on complex reasoning benchmarks and introduces native multimodal understanding. This release marks a significant leap in AI capability, potentially reshaping competitive dynamics in the LLM market. Enterprise customers report 3x productivity gains in early testing, suggesting immediate practical applications.
-
-      Source: [OpenAI Blog](https://openai.com/blog/gpt-5)
-
-      ---
+      - Practical, student-oriented tone accessible to applicants and families
+      - Include specific numbers, deadlines, score requirements, and data points when available
+      - Highlight action items or changes students need to be aware of
+      - Balance accessibility with sufficient detail
 
       ## QUALITY REQUIREMENTS:
       - ✅ Summarize ALL {count} items provided above (no skipping)
       - ✅ Each summary must be exactly 4-6 sentences
-      - ✅ Include specific numbers, metrics, and data when available
+      - ✅ Include specific numbers, dates, and requirements when available
       - ✅ Maintain balanced coverage across different categories
-      - ✅ Include both international and domestic news
-      - ✅ Prioritize accuracy over speculation
       - ✅ All sources must have clickable markdown links
 
       ## AVOID:
       ❌ Generic statements without specifics
       ❌ Summaries shorter than 4 sentences or longer than 6 sentences
-      ❌ Missing clickable links or improper markdown formatting
+      ❌ Missing clickable links
       ❌ Skipping any news items
 
 logging:
