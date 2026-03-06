@@ -163,33 +163,33 @@ class NewsGenerator:
             messages = [{"role": "user", "content": selection_prompt}]
             selection_response = self.provider.generate(
                 messages=messages,
-                max_tokens=4000 # give enough tokens for selection
+                max_tokens=2000 # selection only returns a JSON array
             )
 
             # Parse selected IDs
             json_match = re.search(r'\[[\s\S]*?\]', selection_response)
             if not json_match:
                 logger.warning("Could not parse JSON from selection response, using fallback")
-                # Fallback: select first 18 items
-                selected_ids = list(news_items.keys())[:18]
+                # Fallback: select first 37 items
+                selected_ids = list(news_items.keys())[:37]
             else:
                 try:
                     selected_ids = json.loads(json_match.group(0))
                     # Validate IDs
                     selected_ids = [id for id in selected_ids if id in news_items]
 
-                    # Ensure we have 15-20 items
-                    if len(selected_ids) < 15:
+                    # Ensure we have 30-40 items (target is 37)
+                    if len(selected_ids) < 30:
                         logger.warning(f"Only {len(selected_ids)} items selected, adding more")
                         remaining = [id for id in news_items.keys() if id not in selected_ids]
-                        selected_ids.extend(remaining[:18 - len(selected_ids)])
-                    elif len(selected_ids) > 20:
-                        logger.warning(f"{len(selected_ids)} items selected, trimming to 20")
-                        selected_ids = selected_ids[:20]
+                        selected_ids.extend(remaining[:37 - len(selected_ids)])
+                    elif len(selected_ids) > 40:
+                        logger.warning(f"{len(selected_ids)} items selected, trimming to 40")
+                        selected_ids = selected_ids[:40]
 
                 except json.JSONDecodeError:
                     logger.warning("JSON parse error, using fallback selection")
-                    selected_ids = list(news_items.keys())[:18]
+                    selected_ids = list(news_items.keys())[:37]
 
             logger.info(f"Stage 1 completed: Selected {len(selected_ids)} news items")
             logger.debug(f"Selected IDs: {selected_ids}")
