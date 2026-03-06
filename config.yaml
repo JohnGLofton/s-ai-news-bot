@@ -38,50 +38,46 @@ news:
   # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
   stage2_prompt_template: |
-      You are a senior international education consultant. Create a comprehensive, in-depth study abroad news digest for the {count} pre-selected news items below.
+      You are a senior international education consultant. Create a study abroad news digest for the {count} pre-selected news items below.
 
       {selected_news}
 
       ## OUTPUT STRUCTURE:
 
-      Organize news items into relevant categories (use only categories that have news):
-      1. **US University Admissions & International Students** - Application policies, enrollment data, campus news
-      2. **UK University Admissions & International Students** - UCAS updates, university policies, visa news
-      3. **Study Abroad Visa & Immigration Policy** - F-1, Student visa, OPT/STEM OPT, Graduate Route updates
-      4. **Language Tests** - IELTS, TOEFL, SAT, ACT, Duolingo English Test score changes and policies
-      5. **Global University Rankings** - QS, THE, ARWU and other ranking announcements
-      6. **Scholarships & Funding** - New scholarships, grants, financial aid for international students
-      7. **Other International Education News** - Any other relevant study abroad developments
+      Organize news items into these fixed categories (include ALL categories in output, show count in header):
+      1. **国际新闻**（7条）- General international education news
+      2. **国内新闻**（7条）- China domestic study abroad news
+      3. **美国大学招生与国际学生**（10条）- US university admissions and international students
+      4. **英国大学招生与国际学生**（10条）- UK university admissions and international students
+      5. **留学签证与移民政策**（7条）- Study abroad visa and immigration policy
+      6. **其他国际教育新闻**（7条）- Other international education news
+
+      Distribute the {count} items across these categories as evenly as possible.
+      If a category has fewer items than the target, show what is available.
 
       ## CONTENT REQUIREMENTS:
 
       For each news item, provide:
-      1. **Clear Headline**: Informative title capturing the key development
-      2. **Analytical Summary (4-6 sentences)**:
-         - What happened (core news and context)
-         - Key details, deadlines, requirements, or metrics
-         - Why it matters for international students or applicants
-         - Practical implications or action items for students
-      3. **Source Attribution**: Always include as clickable markdown link: [Source Name](URL)
+      1. **Clear Headline**: Informative title
+      2. **Summary**: Exactly 50 Chinese characters. No more, no less.
+      3. **Source Attribution**: [Source Name](URL)
 
       ## WRITING STYLE:
-      - Practical, student-oriented tone accessible to applicants and families
-      - Include specific numbers, deadlines, score requirements, and data points when available
-      - Highlight action items or changes students need to be aware of
-      - Balance accessibility with sufficient detail
+      - Summaries must be in Chinese and exactly 50 characters
+      - Include key facts, numbers, and dates within the 50 characters
+      - Be concise and information-dense
 
       ## QUALITY REQUIREMENTS:
-      - ✅ Summarize ALL {count} items provided above (no skipping)
-      - ✅ Each summary must be exactly 4-6 sentences
-      - ✅ Include specific numbers, dates, and requirements when available
-      - ✅ Maintain balanced coverage across different categories
-      - ✅ All sources must have clickable markdown links
+      - ✅ Summarize ALL {count} items (no skipping)
+      - ✅ Each summary exactly 50 Chinese characters
+      - ✅ All sources as clickable markdown links
+      - ✅ Use all 6 category headers even if some have fewer items
 
       ## AVOID:
-      ❌ Generic statements without specifics
-      ❌ Summaries shorter than 4 sentences or longer than 6 sentences
+      ❌ Summaries not equal to 50 characters
       ❌ Missing clickable links
       ❌ Skipping any news items
+      ❌ Adding extra categories
 
 logging:
   level: INFO
