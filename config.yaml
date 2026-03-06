@@ -15,17 +15,21 @@ news:
 
       ## YOUR TASK - STAGE 1: NEWS SELECTION
 
-      You are a senior international education consultant and analyst. Analyze the {total_items} news items above and select exactly 15-20 of the highest-quality items relevant to international study abroad.
+      You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 37 of the highest-quality items.
 
-      ### SELECTION CRITERIA:
-      - ✅ US/UK university admissions policies and changes for international students
-      - ✅ Major headline news about international student applications and enrollment trends
-      - ✅ Study abroad visa policies and immigration updates (US F-1, UK Tier 4/Student visa, etc.)
-      - ✅ Language test news: IELTS, TOEFL, SAT, ACT, Duolingo English Test updates and policy changes
-      - ✅ Global university ranking news: QS, Times Higher Education (THE), ARWU updates
-      - ✅ Scholarship and funding opportunities for international students
-      - ✅ Include both international and domestic (language-specific) news when available
-      - ✅ Prefer primary sources over secondary reporting
+      ### SELECTION TARGETS BY CATEGORY:
+      - 5 items: Major international headline news (global politics, finance, technology - any topic)
+      - 5 items: Major China domestic headline news (politics, economy, technology - any topic)
+      - 10 items: US university news - famous US universities headlines, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
+      - 10 items: UK university news - famous UK universities headlines, international student admissions, IELTS/TOEFL test news
+      - 7 items: Study abroad visa and immigration policy news
+      - 5 items: Other international education headline news (rankings, scholarships, etc.)
+
+      ### QUALITY CRITERIA:
+      - ✅ Prioritize headline and trending news
+      - ✅ Prefer primary sources and official announcements
+      - ✅ Include specific data, numbers, policy changes
+      - ✅ Avoid duplicate or near-duplicate stories
 
       ### OUTPUT FORMAT:
       Return ONLY a JSON array of selected news IDs. No explanations, no markdown, just the JSON array.
@@ -33,50 +37,59 @@ news:
       Example format:
       ["INT-1", "INT-5", "DOM-2", "INT-12", ...]
 
-      CRITICAL: Select exactly 15-20 items. No more, no less.
+      CRITICAL: Select exactly 37 items total following the category breakdown above.
 
   # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
   stage2_prompt_template: |
-      You are a senior international education consultant. Create a study abroad news digest for the {count} pre-selected news items below.
+      You are a senior news editor. Create a news digest in Chinese for the {count} pre-selected news items below.
 
       {selected_news}
 
       ## OUTPUT STRUCTURE:
 
-      Organize news items into these fixed categories (include ALL categories in output, show count in header):
-      1. **国际新闻**（7条）- General international education news
-      2. **国内新闻**（7条）- China domestic study abroad news
-      3. **美国大学招生与国际学生**（10条）- US university admissions and international students
-      4. **英国大学招生与国际学生**（10条）- UK university admissions and international students
-      5. **留学签证与移民政策**（7条）- Study abroad visa and immigration policy
-      6. **其他国际教育新闻**（7条）- Other international education news
+      Organize ALL news items into these exact 6 categories with these exact headers (NO item count in brackets):
 
-      Distribute the {count} items across these categories as evenly as possible.
-      If a category has fewer items than the target, show what is available.
+      ## 国际新闻
+      ## 国内新闻
+      ## 美国大学招生与国际学生
+      ## 英国大学招生与国际学生
+      ## 留学签证与移民政策
+      ## 其他国际教育新闻
+
+      Category guidelines:
+      - 国际新闻: 5 items - global politics, finance, technology headline news (not required to be study-abroad related)
+      - 国内新闻: 5 items - China domestic headline news (politics, economy, technology)
+      - 美国大学招生与国际学生: 10 items - famous US university news, international admissions, IELTS/TOEFL/SAT/ACT/Duolingo
+      - 英国大学招生与国际学生: 10 items - famous UK university news, international admissions, language tests
+      - 留学签证与移民政策: 7 items - visa policy, immigration updates for students
+      - 其他国际教育新闻: 5 items - rankings, scholarships, other education news
 
       ## CONTENT REQUIREMENTS:
 
-      For each news item, provide:
-      1. **Clear Headline**: Informative title
-      2. **Summary**: Exactly 50 Chinese characters. No more, no less.
-      3. **Source Attribution**: [Source Name](URL)
+      For each news item provide:
+      1. **标题**: Clear Chinese headline
+      2. **摘要**: 150-200 Chinese characters summary covering: what happened, key data/numbers, why it matters, implications for students
+      3. **来源**: [来源名称](URL)
 
       ## WRITING STYLE:
-      - Summaries must be in Chinese and exactly 50 characters
-      - Include key facts, numbers, and dates within the 50 characters
-      - Be concise and information-dense
+      - All content in Chinese
+      - Summaries must be 150-200 Chinese characters (strictly enforced)
+      - Include specific numbers, dates, policy names
+      - Student-oriented perspective
 
       ## QUALITY REQUIREMENTS:
       - ✅ Summarize ALL {count} items (no skipping)
-      - ✅ Each summary exactly 50 Chinese characters
+      - ✅ Each summary strictly 150-200 Chinese characters
       - ✅ All sources as clickable markdown links
-      - ✅ Use all 6 category headers even if some have fewer items
+      - ✅ Use all 6 category headers exactly as written above
+      - ✅ NO item count numbers in category headers
 
       ## AVOID:
-      ❌ Summaries not equal to 50 characters
+      ❌ Summaries outside 150-200 character range
       ❌ Missing clickable links
       ❌ Skipping any news items
+      ❌ Adding count numbers like （5条） to headers
       ❌ Adding extra categories
 
 logging:

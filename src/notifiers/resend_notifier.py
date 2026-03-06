@@ -21,7 +21,12 @@ class ResendNotifier:
         to_emails: Optional[str] = None,
     ):
         self.api_key = api_key or os.getenv("RESEND_API_KEY")
-        self.from_email = from_email or os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
+        raw_from = from_email or os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
+        # If no display name set, add default display name
+        if "<" not in raw_from:
+            self.from_email = f"BHE留学资讯 <{raw_from}>"
+        else:
+            self.from_email = raw_from
         to_str = to_emails or os.getenv("EMAIL_TO", "")
         self.to_emails: List[str] = [e.strip() for e in to_str.split(",") if e.strip()]
 
