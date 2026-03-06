@@ -73,12 +73,12 @@ class NewsFetcher:
 
         # Chinese study abroad news sources (zh)
         self.chinese_feeds = {
-            # ── 国内头条新闻 ──
-            "新华社": "http://www.xinhuanet.com/rss/news.xml",
-            "人民日报": "http://www.people.com.cn/rss/politics.xml",
-            "Google News 国内头条": "https://news.google.com/rss/search?q=中国+政策+经济+科技&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 财经头条": "https://news.google.com/rss/search?q=中国+金融+股市+经济&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
-            "Google News 科技头条": "https://news.google.com/rss/search?q=中国+科技+人工智能+互联网&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            # ── 国内头条（Google News 可在海外服务器访问）──
+            "Google News 中国政治": "https://news.google.com/rss/search?q=中国+政府+政策+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 中国经济": "https://news.google.com/rss/search?q=中国+经济+GDP+贸易+金融&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 中国科技": "https://news.google.com/rss/search?q=中国+科技+人工智能+芯片+互联网&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 中国社会": "https://news.google.com/rss/search?q=中国+社会+民生+热点&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "Google News 中美关系": "https://news.google.com/rss/search?q=中美+关系+贸易战+外交&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
             # ── 留学相关 ──
             "Google News 留学申请": "https://news.google.com/rss/search?q=留学+申请+美国+英国+大学&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
             "Google News 语言考试": "https://news.google.com/rss/search?q=雅思+托福+SAT+ACT+多邻国+留学考试&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",

@@ -17,27 +17,29 @@ news:
 
       You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 37 of the highest-quality items.
 
-      ### SELECTION TARGETS BY CATEGORY:
-      - 5 items: Major international headline news (global politics, finance, technology - any topic)
-      - 5 items: Major China domestic headline news (politics, economy, technology - any topic)
-      - 10 items: US university news - famous US universities headlines, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
-      - 10 items: UK university news - famous UK universities headlines, international student admissions, IELTS/TOEFL test news
-      - 7 items: Study abroad visa and immigration policy news
-      - 5 items: Other international education headline news (rankings, scholarships, etc.)
+      ### SELECTION TARGETS BY CATEGORY (STRICTLY FOLLOW):
+      - Exactly 5 items: Major international headline news (global politics, finance, technology - NOT study-abroad related)
+      - Exactly 5 items: Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
+      - Exactly 10 items: US university news - famous US universities headlines, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
+      - Exactly 10 items: UK university news - famous UK universities headlines, international student admissions, language tests
+      - Exactly 7 items: Study abroad visa and immigration policy news
+      - Exactly 5 items: Other international education headline news (rankings, scholarships, etc.)
 
-      ### QUALITY CRITERIA:
-      - ✅ Prioritize headline and trending news
-      - ✅ Prefer primary sources and official announcements
-      - ✅ Include specific data, numbers, policy changes
-      - ✅ Avoid duplicate or near-duplicate stories
+      ### CRITICAL RULES:
+      - For 国际新闻 category: select general world news ONLY (NOT education/study abroad)
+      - For 国内新闻 category: select China domestic news ONLY (NOT education/study abroad)
+      - Do NOT put the same news in multiple categories
+      - If there are not enough items in a category, still select the best available
+      - Prioritize headline, trending, and breaking news
+      - Prefer primary sources and official announcements
 
       ### OUTPUT FORMAT:
-      Return ONLY a JSON array of selected news IDs. No explanations, no markdown, just the JSON array.
+      Return ONLY a JSON array of exactly 37 selected news IDs. No explanations, no markdown, just the JSON array.
 
       Example format:
       ["INT-1", "INT-5", "DOM-2", "INT-12", ...]
 
-      CRITICAL: Select exactly 37 items total following the category breakdown above.
+      CRITICAL: Select exactly 37 items total.
 
   # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
