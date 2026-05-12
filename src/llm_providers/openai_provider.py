@@ -81,8 +81,13 @@ class OpenAIProvider(BaseLLMProvider):
                 **kwargs
             )
 
-            # Extract text from response
-            if response.choices and len(response.choices) > 0:
+            # Handle both proper ChatCompletion objects and raw string responses
+            # (some OpenAI-compatible APIs may return strings directly)
+            if isinstance(response, str):
+                logger.debug("API returned a raw string response (non-standard API)")
+                return response
+
+            if hasattr(response, 'choices') and response.choices and len(response.choices) > 0:
                 return response.choices[0].message.content
 
             raise Exception("No response received from OpenAI")
