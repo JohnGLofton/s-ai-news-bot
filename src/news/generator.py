@@ -116,7 +116,7 @@ class NewsGenerator:
 
     def generate_news_digest_from_sources(
         self,
-        max_tokens: int = 16000,
+        max_tokens: int = 12000,
         language: str = "en",
         max_items_per_source: int = 5,
         stage1_template: Optional[str] = None,
@@ -190,7 +190,7 @@ class NewsGenerator:
             if not json_match:
                 logger.warning("Could not parse JSON from selection response, using fallback")
                 # Fallback: select first 37 items
-                selected_ids = list(news_items.keys())[:37]
+                selected_ids = list(news_items.keys())[:25]
             else:
                 try:
                     selected_ids = json.loads(json_match.group(0))
@@ -198,17 +198,17 @@ class NewsGenerator:
                     selected_ids = [id for id in selected_ids if id in news_items]
 
                     # Ensure we have 30-40 items (target is 37)
-                    if len(selected_ids) < 30:
+                    if len(selected_ids) < 20:
                         logger.warning(f"Only {len(selected_ids)} items selected, adding more")
                         remaining = [id for id in news_items.keys() if id not in selected_ids]
-                        selected_ids.extend(remaining[:37 - len(selected_ids)])
-                    elif len(selected_ids) > 40:
+                        selected_ids.extend(remaining[:25 - len(selected_ids)])
+                    elif len(selected_ids) > 30:
                         logger.warning(f"{len(selected_ids)} items selected, trimming to 40")
-                        selected_ids = selected_ids[:40]
+                        selected_ids = selected_ids[:30]
 
                 except json.JSONDecodeError:
                     logger.warning("JSON parse error, using fallback selection")
-                    selected_ids = list(news_items.keys())[:37]
+                    selected_ids = list(news_items.keys())[:25]
 
             logger.info(f"Stage 1 completed: Selected {len(selected_ids)} news items")
             logger.debug(f"Selected IDs: {selected_ids}")

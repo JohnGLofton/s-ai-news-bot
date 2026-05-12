@@ -15,15 +15,15 @@ news:
 
       ## YOUR TASK - STAGE 1: NEWS SELECTION
 
-      You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 37 of the highest-quality items.
+      You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 25 of the highest-quality items.
 
       ### MANDATORY SELECTION TARGETS BY CATEGORY:
-      - Exactly 5 items: Major international headline news (global politics, finance, technology - NOT study-abroad related)
-      - Exactly 5 items: Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
-      - Exactly 10 items: US university news - US universities, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
-      - Exactly 10 items: UK university news - UK universities (Oxford, Cambridge, Imperial, UCL, LSE etc.), UK international students, UK education policy
-      - Exactly 7 items: Study abroad visa and immigration policy news (F1 visa, OPT, UK student visa, Australia/Canada study permit)
-      - Exactly 5 items: Other international education headline news (rankings, scholarships, non-US/UK universities)
+      - Exactly 3 items: Major international headline news (global politics, finance, technology - NOT study-abroad related)
+      - Exactly 3 items: Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
+      - Exactly 7 items: US university news - US universities, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
+      - Exactly 5 items: UK university news - UK universities (Oxford, Cambridge, Imperial, UCL, LSE etc.), UK international students, UK education policy
+      - Exactly 4 items: Study abroad visa and immigration policy news (F1 visa, OPT, UK student visa, Australia/Canada study permit)
+      - Exactly 3 items: Other international education headline news (rankings, scholarships, non-US/UK universities)
 
       ### CRITICAL RULES:
       - For 国际新闻: select general world news ONLY (NOT education/study abroad)
@@ -37,12 +37,12 @@ news:
       - Prioritize headline, trending, and breaking news
 
       ### OUTPUT FORMAT:
-      Return ONLY a JSON array of exactly 37 selected news IDs. No explanations, no markdown, just the JSON array.
+      Return ONLY a JSON array of exactly 25 selected news IDs. No explanations, no markdown, just the JSON array.
 
       Example format:
       ["INT-1", "INT-5", "DOM-2", "INT-12", ...]
 
-      CRITICAL: You MUST select exactly 37 items total, with items spread across ALL 6 categories.
+      CRITICAL: You MUST select exactly 25 items total, with items spread across ALL 6 categories.
 
   # Stage 2: Summarization prompt template
   # Placeholders: {count}, {selected_news}
@@ -65,12 +65,12 @@ news:
       ## 其他国际教育新闻
 
       Category guidelines:
-      - 国际新闻: 5 items - global politics, finance, technology headline news (not required to be study-abroad related)
-      - 国内新闻: 5 items - China domestic headline news (politics, economy, technology)
-      - 美国大学招生与国际学生: 10 items - famous US university news, international admissions, IELTS/TOEFL/SAT/ACT/Duolingo
-      - 英国大学招生与国际学生: 10 items - famous UK university news, international admissions, language tests
-      - 留学签证与移民政策: 7 items - visa policy, immigration updates for students
-      - 其他国际教育新闻: 5 items - rankings, scholarships, other education news
+      - 国际新闻: 3 items - global politics, finance, technology headline news (not required to be study-abroad related)
+      - 国内新闻: 3 items - China domestic headline news (politics, economy, technology)
+      - 美国大学招生与国际学生: 7 items - famous US university news, international admissions, IELTS/TOEFL/SAT/ACT/Duolingo
+      - 英国大学招生与国际学生: 5 items - famous UK university news, international admissions, language tests
+      - 留学签证与移民政策: 4 items - visa policy, immigration updates for students
+      - 其他国际教育新闻: 3 items - rankings, scholarships, other education news
 
       ## ABSOLUTE RULES (READ CAREFULLY):
       - **DO NOT output any thinking, reasoning, analysis, categorization logic, or planning process**
