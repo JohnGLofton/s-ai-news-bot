@@ -86,6 +86,16 @@ def main():
                 logger.info(preview)
                 logger.info("-" * 60)
 
+                # Save generated content for artifact inspection
+                try:
+                    today = datetime.now().strftime('%Y-%m-%d')
+                    md_path = f"/tmp/news_digest_{language}_{today}.md"
+                    with open(md_path, 'w', encoding='utf-8') as f:
+                        f.write(news_digest)
+                    logger.info(f"Saved markdown digest to {md_path}")
+                except Exception as save_err:
+                    logger.warning(f"Could not save digest artifact: {save_err}")
+
                 # Track notification results for this language
                 lang_results = {"sent": [], "failed": []}
 

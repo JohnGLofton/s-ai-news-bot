@@ -78,11 +78,13 @@ jobs:
         run: |
           python main.py
 
-      - name: Upload logs on failure
-        if: failure()
+      - name: Save generated content as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: error-logs
+          name: news-digest-${{ github.run_number }}
           path: |
             *.log
-          retention-days: 7
+            /tmp/news_*.html
+            /tmp/news_*.md
+          retention-days: 3
