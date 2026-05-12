@@ -2,7 +2,7 @@
 """
 AI News Bot - Main Application
 
-Generates and distributes daily AI news digests using Anthropic's Claude API.
+Generates and distributes daily study abroad news digests using DeepSeek API.
 """
 import sys
 from datetime import datetime

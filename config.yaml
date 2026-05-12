@@ -1,8 +1,8 @@
 # Study Abroad News Bot Configuration
 llm:
   # Provider: 'claude', 'deepseek', 'gemini', 'grok', 'openai'
-  provider: deepseek
-  # model: deepseek-chat
+  provider: openai
+  # model: accounts/hermes01025-beqn945p/deployments/gstp3a34
 
 news:
   enable_web_search: false

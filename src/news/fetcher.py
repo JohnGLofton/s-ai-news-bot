@@ -70,7 +70,7 @@ class NewsFetcher:
             "Canada Student Visa": "https://news.google.com/rss/search?q=Canada+study+permit+international+students&hl=en&gl=CA&ceid=CA:en&as_qdr=d2",
 
             # ── International General Headlines ──
-            "Reuters Top News": "https://feeds.reuters.com/reuters/topNews",
+            "AP News Top": "https://rsshub.app/apnews/topics/apf-topnews",
             "BBC World News": "https://feeds.bbci.co.uk/news/world/rss.xml",
             "Associated Press": "https://rsshub.app/apnews/topics/apf-topnews",
             "Financial Times Education": "https://news.google.com/rss/search?q=education+university+global&hl=en&gl=US&ceid=US:en&as_qdr=d2",
@@ -92,122 +92,103 @@ class NewsFetcher:
             "Google News 美英名校": "https://news.google.com/rss/search?q=哈佛+麻省理工+剑桥+牛津+名校+录取&hl=zh-CN&gl=CN&ceid=CN:zh-Hans&as_qdr=d2",
         }
 
-        # Japanese AI news sources (ja)
+        # Japanese study abroad news sources (ja)
         self.japanese_feeds = {
-            # Tech News Outlets
-            "ITmedia AI+": "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
-            "Nikkei xTECH": "https://xtech.nikkei.com/rss/index.rdf",
-            "ASCII.jp AI": "https://ascii.jp/elem/000/004/000/4000000/index-2.xml",
-            "Impress Watch": "https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf",
-            # Google News (fallback)
-            "Google News AI (JP)": "https://news.google.com/rss/search?q=人工知能+AI&hl=ja&gl=JP&ceid=JP:ja",
-            "Google News Tech (JP)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=ja&gl=JP&ceid=JP:ja",
+            "Google News 留学+米国+英国+大学 (JP)": "https://news.google.com/rss/search?q=留学+アメリカ+イギリス+大学+入試&hl=ja&gl=JP&ceid=JP:ja&as_qdr=d2",
+            "Google News 留学ビザ+学生 (JP)": "https://news.google.com/rss/search?q=留学+ビザ+学生+就労&hl=ja&gl=JP&ceid=JP:ja&as_qdr=d2",
+            "Google News IELTS+TOEFL+留学 (JP)": "https://news.google.com/rss/search?q=IELTS+TOEFL+留学+英語試験&hl=ja&gl=JP&ceid=JP:ja&as_qdr=d2",
+            "Google News 世界大学ランキング (JP)": "https://news.google.com/rss/search?q=世界大学ランキング+QS+THE&hl=ja&gl=JP&ceid=JP:ja&as_qdr=d2",
+            "Google News 国際ニュース (JP)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=ja&gl=JP&ceid=JP:ja",
         }
 
-        # French AI news sources (fr)
+        # French study abroad news sources (fr)
         self.french_feeds = {
-            # Tech News Outlets
-            "L'Usine Digitale": "https://www.usine-digitale.fr/rss/intelligence-artificielle.xml",
-            "01net": "https://www.01net.com/rss/actualites/",
-            "Frandroid": "https://www.frandroid.com/feed",
-            "BFM Tech": "https://www.bfmtv.com/rss/tech/",
-            # Google News (fallback)
-            "Google News AI (FR)": "https://news.google.com/rss/search?q=intelligence+artificielle&hl=fr&gl=FR&ceid=FR:fr",
-            "Google News Tech (FR)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=fr&gl=FR&ceid=FR:fr",
+            "Google News études à l'étranger (FR)": "https://news.google.com/rss/search?q=études+à+l'étranger+université+étudiants+internationaux&hl=fr&gl=FR&ceid=FR:fr&as_qdr=d2",
+            "Google News visa étudiant (FR)": "https://news.google.com/rss/search?q=visa+étudiant+France+immigration&hl=fr&gl=FR&ceid=FR:fr&as_qdr=d2",
+            "Google News IELTS+TOEFL+université (FR)": "https://news.google.com/rss/search?q=IELTS+TOEFL+université+admission&hl=fr&gl=FR&ceid=FR:fr&as_qdr=d2",
+            "Google News classement universités (FR)": "https://news.google.com/rss/search?q=classement+universités+mondial+QS+THE&hl=fr&gl=FR&ceid=FR:fr&as_qdr=d2",
+            "Google News international (FR)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=fr&gl=FR&ceid=FR:fr",
         }
 
-        # Spanish AI news sources (es)
+        # Spanish study abroad news sources (es)
         self.spanish_feeds = {
-            # Tech News Outlets
-            "Xataka": "https://www.xataka.com/tag/inteligencia-artificial/rss2.xml",
-            "El País Tecnología": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/tecnologia/portada",
-            "Hipertextual": "https://hipertextual.com/feed",
-            "Genbeta": "https://www.genbeta.com/tag/inteligencia-artificial/rss2.xml",
-            # Google News
-            "Google News AI (ES)": "https://news.google.com/rss/search?q=inteligencia+artificial&hl=es&gl=ES&ceid=ES:es",
+            "Google News estudiar extranjero (ES)": "https://news.google.com/rss/search?q=estudiar+en+el+extranjero+universidad+estudiantes+internacionales&hl=es&gl=ES&ceid=ES:es&as_qdr=d2",
+            "Google News visa de estudiante (ES)": "https://news.google.com/rss/search?q=visa+de+estudiante+inmigración&hl=es&gl=ES&ceid=ES:es&as_qdr=d2",
+            "Google News IELTS+TOEFL+universidad (ES)": "https://news.google.com/rss/search?q=IELTS+TOEFL+universidad+admisión&hl=es&gl=ES&ceid=ES:es&as_qdr=d2",
+            "Google News ranking universidades (ES)": "https://news.google.com/rss/search?q=ranking+universidades+mundial+QS&hl=es&gl=ES&ceid=ES:es&as_qdr=d2",
+            "Google News internacional (ES)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=es&gl=ES&ceid=ES:es",
         }
 
-        # German AI news sources (de)
+        # German study abroad news sources (de)
         self.german_feeds = {
-            # Tech News Outlets
-            "Heise Online": "https://www.heise.de/rss/heise-atom.xml",
-            "t3n Digital Pioneers": "https://t3n.de/tag/kuenstliche-intelligenz/feed/",
-            "Golem.de": "https://rss.golem.de/rss.php?feed=RSS2.0",
-            "Computerwoche": "https://www.computerwoche.de/rss/feed/computerwoche-alle",
-            # Google News
-            "Google News AI (DE)": "https://news.google.com/rss/search?q=künstliche+intelligenz&hl=de&gl=DE&ceid=DE:de",
+            "Google News Auslandsstudium (DE)": "https://news.google.com/rss/search?q=Auslandsstudium+Universität+internationale+Studenten&hl=de&gl=DE&ceid=DE:de&as_qdr=d2",
+            "Google News Studentenvisum (DE)": "https://news.google.com/rss/search?q=Studentenvisum+Deutschland+Einwanderung&hl=de&gl=DE&ceid=DE:de&as_qdr=d2",
+            "Google News IELTS+TOEFL+Universität (DE)": "https://news.google.com/rss/search?q=IELTS+TOEFL+Universität+Zulassung&hl=de&gl=DE&ceid=DE:de&as_qdr=d2",
+            "Google News Weltrangliste Universitäten (DE)": "https://news.google.com/rss/search?q=Weltrangliste+Universitäten+QS+THE&hl=de&gl=DE&ceid=DE:de&as_qdr=d2",
+            "Google News international (DE)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=de&gl=DE&ceid=DE:de",
         }
 
-        # Korean AI news sources (ko)
+        # Korean study abroad news sources (ko)
         self.korean_feeds = {
-            # Tech News Outlets
-            "Chosun Biz Tech": "https://biz.chosun.com/rss/tech.xml",
-            "ZDNet Korea": "https://zdnet.co.kr/rss/",
-            "ETNews": "https://rss.etnews.com/Section901.xml",
-            "Korean AI News": "https://www.aitimes.kr/rss/allArticle.xml",
-            # Google News
-            "Google News AI (KR)": "https://news.google.com/rss/search?q=인공지능&hl=ko&gl=KR&ceid=KR:ko",
+            "Google News 유학+미국+영국 (KR)": "https://news.google.com/rss/search?q=유학+미국+영국+대학+입시&hl=ko&gl=KR&ceid=KR:ko&as_qdr=d2",
+            "Google News 유학비자+학생 (KR)": "https://news.google.com/rss/search?q=유학비자+학생+취업&hl=ko&gl=KR&ceid=KR:ko&as_qdr=d2",
+            "Google News IELTS+TOEFL+유학 (KR)": "https://news.google.com/rss/search?q=IELTS+TOEFL+유학+어학시험&hl=ko&gl=KR&ceid=KR:ko&as_qdr=d2",
+            "Google News 세계대학순위 (KR)": "https://news.google.com/rss/search?q=세계대학순위+QS+THE&hl=ko&gl=KR&ceid=KR:ko&as_qdr=d2",
+            "Google News 국제뉴스 (KR)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=ko&gl=KR&ceid=KR:ko",
         }
 
-        # Portuguese AI news sources (pt)
+        # Portuguese study abroad news sources (pt)
         self.portuguese_feeds = {
-            # Tech News Outlets
-            "TecMundo": "https://www.tecmundo.com.br/rss",
-            "Olhar Digital": "https://olhardigital.com.br/feed/",
-            "Canaltech": "https://canaltech.com.br/rss/",
-            "Exame": "https://exame.com/feed/tecnologia/",
-            # Google News
-            "Google News AI (BR)": "https://news.google.com/rss/search?q=inteligência+artificial&hl=pt-BR&gl=BR&ceid=BR:pt-419",
+            "Google News estudar exterior (BR)": "https://news.google.com/rss/search?q=estudar+no+exterior+universidade+estudantes+internacionais&hl=pt-BR&gl=BR&ceid=BR:pt-419&as_qdr=d2",
+            "Google News visto de estudante (BR)": "https://news.google.com/rss/search?q=visto+de+estudante+imigração&hl=pt-BR&gl=BR&ceid=BR:pt-419&as_qdr=d2",
+            "Google News IELTS+TOEFL+universidade (BR)": "https://news.google.com/rss/search?q=IELTS+TOEFL+universidade+admissão&hl=pt-BR&gl=BR&ceid=BR:pt-419&as_qdr=d2",
+            "Google News ranking universidades (BR)": "https://news.google.com/rss/search?q=ranking+universidades+mundial&hl=pt-BR&gl=BR&ceid=BR:pt-419&as_qdr=d2",
+            "Google News internacional (BR)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=pt-BR&gl=BR&ceid=BR:pt-419",
         }
 
-        # Italian AI news sources (it)
+        # Italian study abroad news sources (it)
         self.italian_feeds = {
-            # Tech News Outlets
-            "Il Sole 24 Ore Tech": "https://www.ilsole24ore.com/rss/tecnologia.xml",
-            "Punto Informatico": "https://www.punto-informatico.it/feed/",
-            "Tom's Hardware IT": "https://www.tomshw.it/feed",
-            "Wired Italia": "https://www.wired.it/feed/rss",
-            # Google News
-            "Google News AI (IT)": "https://news.google.com/rss/search?q=intelligenza+artificiale&hl=it&gl=IT&ceid=IT:it",
+            "Google News studio all'estero (IT)": "https://news.google.com/rss/search?q=studio+all'estero+università+studenti+internazionali&hl=it&gl=IT&ceid=IT:it&as_qdr=d2",
+            "Google News visto studentesco (IT)": "https://news.google.com/rss/search?q=visto+studentesco+Italia+immigrazione&hl=it&gl=IT&ceid=IT:it&as_qdr=d2",
+            "Google News IELTS+TOEFL+università (IT)": "https://news.google.com/rss/search?q=IELTS+TOEFL+università+ammissione&hl=it&gl=IT&ceid=IT:it&as_qdr=d2",
+            "Google News classifica università (IT)": "https://news.google.com/rss/search?q=classifica+università+mondiale+QS&hl=it&gl=IT&ceid=IT:it&as_qdr=d2",
+            "Google News internazionale (IT)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=it&gl=IT&ceid=IT:it",
         }
 
-        # Russian AI news sources (ru)
+        # Russian study abroad news sources (ru)
         self.russian_feeds = {
-            # Tech News Outlets
-            "Habr": "https://habr.com/ru/rss/all/",
-            "CNews": "https://www.cnews.ru/inc/rss/news.xml",
-            "Roem.ru": "https://roem.ru/feed/",
-            "VC.ru": "https://vc.ru/rss/all",
-            # Google News
-            "Google News AI (RU)": "https://news.google.com/rss/search?q=искусственный+интеллект&hl=ru&gl=RU&ceid=RU:ru",
+            "Google News обучение за рубежом (RU)": "https://news.google.com/rss/search?q=обучение+за+рубежом+университет+иностранные+студенты&hl=ru&gl=RU&ceid=RU:ru&as_qdr=d2",
+            "Google News студенческая виза (RU)": "https://news.google.com/rss/search?q=студенческая+виза+иммиграция&hl=ru&gl=RU&ceid=RU:ru&as_qdr=d2",
+            "Google News IELTS+TOEFL+университет (RU)": "https://news.google.com/rss/search?q=IELTS+TOEFL+университет+поступление&hl=ru&gl=RU&ceid=RU:ru&as_qdr=d2",
+            "Google News рейтинг университетов (RU)": "https://news.google.com/rss/search?q=рейтинг+университетов+мировой+QS&hl=ru&gl=RU&ceid=RU:ru&as_qdr=d2",
+            "Google News международные новости (RU)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=ru&gl=RU&ceid=RU:ru",
         }
 
-        # Dutch AI news sources (nl)
+        # Dutch study abroad news sources (nl)
         self.dutch_feeds = {
-            # Tech News Outlets
-            "Tweakers": "https://feeds.feedburner.com/tweakers/mixed",
-            "Computable": "https://www.computable.nl/rss.xml",
-            "Dutch IT Channel": "https://dutchitchannel.nl/feed/",
-            # Google News
-            "Google News AI (NL)": "https://news.google.com/rss/search?q=kunstmatige+intelligentie&hl=nl&gl=NL&ceid=NL:nl",
+            "Google News studeren buitenland (NL)": "https://news.google.com/rss/search?q=studeren+in+het+buitenland+universiteit+internationale+studenten&hl=nl&gl=NL&ceid=NL:nl&as_qdr=d2",
+            "Google News studentenvisum (NL)": "https://news.google.com/rss/search?q=studentenvisum+Nederland+immigratie&hl=nl&gl=NL&ceid=NL:nl&as_qdr=d2",
+            "Google News IELTS+TOEFL+universiteit (NL)": "https://news.google.com/rss/search?q=IELTS+TOEFL+universiteit+toelating&hl=nl&gl=NL&ceid=NL:nl&as_qdr=d2",
+            "Google News wereldranglijst universiteiten (NL)": "https://news.google.com/rss/search?q=wereldranglijst+universiteiten+QS&hl=nl&gl=NL&ceid=NL:nl&as_qdr=d2",
+            "Google News internationaal (NL)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=nl&gl=NL&ceid=NL:nl",
         }
 
-        # Arabic AI news sources (ar)
+        # Arabic study abroad news sources (ar)
         self.arabic_feeds = {
-            # Tech News Outlets
-            "Arageek": "https://www.arageek.com/feed",
-            "Tech Wd": "https://www.tech-wd.com/feed/",
-            # Google News
-            "Google News AI (AR)": "https://news.google.com/rss/search?q=الذكاء+الاصطناعي&hl=ar&gl=SA&ceid=SA:ar",
+            "Google News الدراسة في الخارج (AR)": "https://news.google.com/rss/search?q=الدراسة+في+الخارج+جامعة+طلاب+دوليين&hl=ar&gl=SA&ceid=SA:ar&as_qdr=d2",
+            "Google News تأشيرة طالب (AR)": "https://news.google.com/rss/search?q=تأشيرة+طالب+هجرة&hl=ar&gl=SA&ceid=SA:ar&as_qdr=d2",
+            "Google News IELTS+TOEFL+جامعة (AR)": "https://news.google.com/rss/search?q=IELTS+TOEFL+جامعة+قبول&hl=ar&gl=SA&ceid=SA:ar&as_qdr=d2",
+            "Google News تصنيف الجامعات (AR)": "https://news.google.com/rss/search?q=تصنيف+الجامعات+العالمي+QS&hl=ar&gl=SA&ceid=SA:ar&as_qdr=d2",
+            "Google News أخبار دولية (AR)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=ar&gl=SA&ceid=SA:ar",
         }
 
-        # Hindi AI news sources (hi)
+        # Hindi study abroad news sources (hi)
         self.hindi_feeds = {
-            # Tech News Outlets
-            "Jagran Josh Tech": "https://www.jagranjosh.com/rss/tech.xml",
-            "NDTV Gadgets": "https://feeds.feedburner.com/ndtvgadgets-latest",
-            # Google News
-            "Google News AI (HI)": "https://news.google.com/rss/search?q=कृत्रिम+बुद्धिमत्ता&hl=hi&gl=IN&ceid=IN:hi",
+            "Google News विदेश अध्ययन (HI)": "https://news.google.com/rss/search?q=विदेश+अध्ययन+विश्वविद्यालय+अंतरराष्ट्रीय+छात्र&hl=hi&gl=IN&ceid=IN:hi&as_qdr=d2",
+            "Google News छात्र वीजा (HI)": "https://news.google.com/rss/search?q=छात्र+वीजा+आव्रजन&hl=hi&gl=IN&ceid=IN:hi&as_qdr=d2",
+            "Google News IELTS+TOEFL+विश्वविद्यालय (HI)": "https://news.google.com/rss/search?q=IELTS+TOEFL+विश्वविद्यालय+प्रवेश&hl=hi&gl=IN&ceid=IN:hi&as_qdr=d2",
+            "Google News विश्वविद्यालय रैंकिंग (HI)": "https://news.google.com/rss/search?q=विश्वविद्यालय+रैंकिंग+QS+THE&hl=hi&gl=IN&ceid=IN:hi&as_qdr=d2",
+            "Google News अंतर्राष्ट्रीय (HI)": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtcG9HZ0pEVGlnQVAB?hl=hi&gl=IN&ceid=IN:hi",
         }
 
 
@@ -354,7 +335,7 @@ class NewsFetcher:
         Returns:
             Formatted news text
         """
-        formatted = "# Recent AI News Items to Summarize\n\n"
+        formatted = "# Recent Study Abroad News Items to Summarize\n\n"
 
         if news_data['international']:
             formatted += "## International News\n\n"

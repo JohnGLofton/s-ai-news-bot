@@ -4,6 +4,7 @@ AI News Generator using configurable LLM providers
 from typing import List, Optional, Dict
 import json
 import re
+import time
 from ..logger import setup_logger
 from ..config import LANGUAGE_NAMES
 from .web_search import WebSearchTool, get_search_tool_definition
@@ -51,6 +52,21 @@ class NewsGenerator:
             f"(model: {self.provider.model}, web_search: {enable_web_search})"
         )
 
+    def _generate_with_retry(self, messages, max_tokens=2000, max_retries=2, retry_delay=10):
+        """Call LLM with retry on transient failures (429/502/503/529)."""
+        for attempt in range(max_retries + 1):
+            try:
+                return self.provider.generate(messages=messages, max_tokens=max_tokens)
+            except Exception as e:
+                err = str(e)
+                is_transient = any(code in err for code in ("429", "502", "503", "529", "rate_limit", "overloaded"))
+                if is_transient and attempt < max_retries:
+                    wait = retry_delay * (attempt + 1)
+                    logger.warning(f"LLM transient error (attempt {attempt+1}/{max_retries+1}), retrying in {wait}s: {err}")
+                    time.sleep(wait)
+                else:
+                    raise
+
     def _format_news_with_ids(self, news_data: Dict) -> tuple:
         """
         Format news with unique IDs for selection stage.
@@ -61,7 +77,7 @@ class NewsGenerator:
         Returns:
             Tuple of (formatted_text, news_items_dict)
         """
-        formatted = "# Recent AI News Items for Selection\n\n"
+        formatted = "# Recent Study Abroad News Items for Selection\n\n"
         news_items = {}  # id -> full news item
         item_id = 1
 
@@ -161,9 +177,9 @@ class NewsGenerator:
             )
 
             messages = [{"role": "user", "content": selection_prompt}]
-            selection_response = self.provider.generate(
+            selection_response = self._generate_with_retry(
                 messages=messages,
-                max_tokens=2000 # selection only returns a JSON array
+                max_tokens=2000
             )
 
             # Parse selected IDs
@@ -200,7 +216,7 @@ class NewsGenerator:
             logger.info(f"Stage 2: Creating detailed summaries for selected items...")
 
             # Format selected news for summarization
-            formatted_selected = "# Selected High-Quality AI News Items\n\n"
+            formatted_selected = "# Selected High-Quality Study Abroad News Items\n\n"
             for news_id in selected_ids:
                 item = news_items[news_id]
                 formatted_selected += f"### [{news_id}] {item['title']}\n"
@@ -231,7 +247,7 @@ class NewsGenerator:
 
             # Execute Stage 2: Generate detailed summaries
             messages = [{"role": "user", "content": summarization_prompt}]
-            response_text = self.provider.generate(
+            response_text = self._generate_with_retry(
                 messages=messages,
                 max_tokens=max_tokens
             )

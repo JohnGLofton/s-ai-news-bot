@@ -33,9 +33,12 @@ class OpenAIProvider(BaseLLMProvider):
 
         super().__init__(api_key=api_key, model=model or self.default_model)
 
-        # Initialize OpenAI client
-        self.client = OpenAI(api_key=self.api_key)
-        logger.info(f"OpenAI provider initialized with model: {self.model}")
+        base_url = os.getenv("OPENAI_BASE_URL")
+        client_kwargs = {"api_key": self.api_key}
+        if base_url:
+            client_kwargs["base_url"] = base_url
+        self.client = OpenAI(**client_kwargs)
+        logger.info(f"OpenAI provider initialized with model: {self.model}" + (f", base_url: {base_url}" if base_url else ""))
 
     @property
     def provider_name(self) -> str:
