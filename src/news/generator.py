@@ -116,7 +116,7 @@ class NewsGenerator:
 
     def generate_news_digest_from_sources(
         self,
-        max_tokens: int = 8000,
+        max_tokens: int = 16000,
         language: str = "en",
         max_items_per_source: int = 5,
         stage1_template: Optional[str] = None,
@@ -260,19 +260,35 @@ class NewsGenerator:
                 max_tokens=max_tokens
             )
 
-            # Strip any thinking/reasoning that leaked through
-            # If response starts with numbered steps or analysis, find the first "## 国际新闻" and cut everything before it
-            thinking_patterns = [
-                r'^[\s\S]*?(?=## 国际新闻)',  # Anything before first category header
-            ]
-            for pattern in thinking_patterns:
-                match = re.search(pattern, response_text)
-                if match and match.group(0).strip():
-                    # Only strip if there's content before "## 国际新闻" that looks like thinking
-                    prefix = match.group(0).strip()
-                    if prefix and not prefix.startswith('## 国际新闻'):
-                        logger.warning(f"Stripping {len(prefix)} chars of thinking/reasoning from Stage 2 response")
-                        response_text = response_text[match.end():]
+            # Post-process: strip thinking/reasoning that reasoning models leak into content
+            # 1. Find the first standalone "## 国际新闻" header and cut everything before it
+            #    Reasoning models may mention "## 国际新闻" in comma-separated lists during thinking,
+            #    so we match only the standalone header (end of line, not followed by comma)
+            header_pattern = r'^[\s\S]*?(?=\*{0,2}## 国际新闻\*{0,2}\s*$)'
+            match = re.search(header_pattern, response_text, re.MULTILINE)
+            if match and match.group(0).strip():
+                prefix = match.group(0).strip()
+                if prefix and not prefix.startswith('## 国际新闻'):
+                    logger.warning(f"Stripping {len(prefix)} chars of thinking/reasoning from Stage 2 response")
+                    response_text = response_text[match.end():]
+
+            # 2. Remove "*Char count*" lines that reasoning models insert
+            response_text = re.sub(r'\n\s*\*Char count[^\n]*', '', response_text)
+            # 3. Remove "*Char count check*" lines
+            response_text = re.sub(r'\n\s*\*Char count check\*[^\n]*', '', response_text)
+            # 4. Clean up bold-wrapped headers: "**## 国际新闻**" → "## 国际新闻"
+            response_text = re.sub(r'\*\*(## [^*]+)\*\*', r'\1', response_text)
+            # 5. Remove leading whitespace on each line (4-space indent from thinking)
+            lines = response_text.split('\n')
+            cleaned_lines = []
+            for line in lines:
+                # Strip leading 4+ spaces that come from indented thinking output
+                if line.startswith('    '):
+                    line = line.lstrip()
+                cleaned_lines.append(line)
+            response_text = '\n'.join(cleaned_lines)
+            # 6. Remove multiple consecutive blank lines
+            response_text = re.sub(r'\n{3,}', '\n\n', response_text)
 
             # Add footer
             footer = "\n\n---\n\n*OpenClaw by BHE助理03 Bot - [WWW.BHEVIP.COM](https://www.bhevip.com)*"
