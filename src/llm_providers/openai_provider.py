@@ -84,11 +84,17 @@ class OpenAIProvider(BaseLLMProvider):
             # Handle both proper ChatCompletion objects and raw string responses
             # (some OpenAI-compatible APIs may return strings directly)
             if isinstance(response, str):
-                logger.debug("API returned a raw string response (non-standard API)")
+                # Check if the response looks like an HTML error page
+                if response.strip().startswith('<!') or response.strip().startswith('<html') or '<!doctype' in response.lower():
+                    logger.error(f"API returned HTML instead of ChatCompletion (likely an error page). First 200 chars: {response[:200]}")
+                    raise Exception(f"API returned HTML error page instead of valid response. This usually means the API endpoint, key, or model is misconfigured. Response starts with: {response[:100]}")
+                logger.info(f"API returned raw string response ({len(response)} chars)")
                 return response
 
             if hasattr(response, 'choices') and response.choices and len(response.choices) > 0:
-                return response.choices[0].message.content
+                content = response.choices[0].message.content
+                logger.info(f"OpenAI API returned {len(content)} chars, finish_reason={response.choices[0].finish_reason}")
+                return content
 
             raise Exception("No response received from OpenAI")
 
