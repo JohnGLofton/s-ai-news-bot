@@ -176,7 +176,10 @@ class NewsGenerator:
                 total_items=total_items
             )
 
-            messages = [{"role": "user", "content": selection_prompt}]
+            messages = [
+                {"role": "system", "content": "You are a news selection assistant. Return ONLY a JSON array of news IDs. No explanations, no thinking process, no analysis. Example: [\"INT-1\", \"INT-5\", \"DOM-2\"]"},
+                {"role": "user", "content": selection_prompt}
+            ]
             selection_response = self._generate_with_retry(
                 messages=messages,
                 max_tokens=2000
@@ -246,11 +249,30 @@ class NewsGenerator:
                 summarization_prompt += f"\n\nIMPORTANT: Please respond entirely in {language_name}."
 
             # Execute Stage 2: Generate detailed summaries
-            messages = [{"role": "user", "content": summarization_prompt}]
+            # System message to suppress thinking/reasoning output
+            system_message = {
+                "role": "system",
+                "content": "你是一名专业中文新闻编辑。直接输出最终格式化的新闻日报，禁止输出任何思考过程、推理步骤、分类逻辑或规划内容。回复必须以'## 国际新闻'开头，只包含6个分类的新闻摘要。"
+            }
+            messages = [system_message, {"role": "user", "content": summarization_prompt}]
             response_text = self._generate_with_retry(
                 messages=messages,
                 max_tokens=max_tokens
             )
+
+            # Strip any thinking/reasoning that leaked through
+            # If response starts with numbered steps or analysis, find the first "## 国际新闻" and cut everything before it
+            thinking_patterns = [
+                r'^[\s\S]*?(?=## 国际新闻)',  # Anything before first category header
+            ]
+            for pattern in thinking_patterns:
+                match = re.search(pattern, response_text)
+                if match and match.group(0).strip():
+                    # Only strip if there's content before "## 国际新闻" that looks like thinking
+                    prefix = match.group(0).strip()
+                    if prefix and not prefix.startswith('## 国际新闻'):
+                        logger.warning(f"Stripping {len(prefix)} chars of thinking/reasoning from Stage 2 response")
+                        response_text = response_text[match.end():]
 
             # Add footer
             footer = "\n\n---\n\n*OpenClaw by BHE助理03 Bot - [WWW.BHEVIP.COM](https://www.bhevip.com)*"
