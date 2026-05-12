@@ -290,9 +290,7 @@ class NewsGenerator:
             # 6. Remove multiple consecutive blank lines
             response_text = re.sub(r'\n{3,}', '\n\n', response_text)
 
-            # Add footer
-            footer = "\n\n---\n\n*OpenClaw by BHE助理03 Bot - [WWW.BHEVIP.COM](https://www.bhevip.com)*"
-            response_text += footer
+            # Footer is now handled by the email HTML template, no need to add it here
 
             logger.info("Stage 2 completed: News digest generated successfully")
             logger.info(f"Two-stage prompt chaining completed: {total_items} items → {len(selected_ids)} selected → full digest")
