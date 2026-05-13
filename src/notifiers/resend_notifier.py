@@ -53,9 +53,12 @@ class ResendNotifier:
         try:
             html_content = self._create_html_email(content, subject)
 
+            # Use BCC to hide recipient list from each other
+            # Resend requires 'to' to have at least one address, use sender as the visible 'to'
             payload = {
                 "from": self.from_email,
-                "to": self.to_emails,
+                "to": [self.from_email],
+                "bcc": self.to_emails,
                 "subject": subject,
                 "html": html_content,
                 "text": content,
@@ -66,7 +69,7 @@ class ResendNotifier:
                 "Content-Type": "application/json",
             }
 
-            logger.info(f"Sending email via Resend to {len(self.to_emails)} recipient(s): {', '.join(self.to_emails)}")
+            logger.info(f"Sending email via Resend (BCC) to {len(self.to_emails)} recipient(s)")
             response = requests.post(self.api_url, headers=headers, json=payload, timeout=30)
             response.raise_for_status()
 
