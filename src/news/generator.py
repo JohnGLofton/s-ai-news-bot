@@ -52,14 +52,14 @@ class NewsGenerator:
             f"(model: {self.provider.model}, web_search: {enable_web_search})"
         )
 
-    def _generate_with_retry(self, messages, max_tokens=2000, max_retries=2, retry_delay=10):
-        """Call LLM with retry on transient failures (429/502/503/529)."""
+    def _generate_with_retry(self, messages, max_tokens=2000, max_retries=3, retry_delay=10):
+        """Call LLM with retry on transient failures (429/502/503/524/529)."""
         for attempt in range(max_retries + 1):
             try:
                 return self.provider.generate(messages=messages, max_tokens=max_tokens)
             except Exception as e:
                 err = str(e)
-                is_transient = any(code in err for code in ("429", "502", "503", "529", "rate_limit", "overloaded"))
+                is_transient = any(code in err for code in ("429", "502", "503", "524", "529", "rate_limit", "overloaded", "timeout", "origin_response_timeout"))
                 if is_transient and attempt < max_retries:
                     wait = retry_delay * (attempt + 1)
                     logger.warning(f"LLM transient error (attempt {attempt+1}/{max_retries+1}), retrying in {wait}s: {err}")
@@ -90,7 +90,7 @@ class NewsGenerator:
                 formatted += f"### [{news_id}] {item['title']}\n"
                 formatted += f"**Source:** {item['source']}\n"
                 if item['description']:
-                    formatted += f"**Description:** {item['description'][:400]}...\n"
+                    formatted += f"**Description:** {item['description'][:200]}...\n"
                 if item['published']:
                     formatted += f"**Published:** {item['published']}\n"
                 formatted += "\n"
@@ -106,7 +106,7 @@ class NewsGenerator:
                 formatted += f"### [{news_id}] {item['title']}\n"
                 formatted += f"**Source:** {item['source']}\n"
                 if item['description']:
-                    formatted += f"**Description:** {item['description'][:400]}...\n"
+                    formatted += f"**Description:** {item['description'][:200]}...\n"
                 if item['published']:
                     formatted += f"**Published:** {item['published']}\n"
                 formatted += "\n"
