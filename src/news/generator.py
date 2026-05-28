@@ -116,7 +116,7 @@ class NewsGenerator:
 
     def generate_news_digest_from_sources(
         self,
-        max_tokens: int = 4000,
+        max_tokens: int = 6000,
         language: str = "en",
         max_items_per_source: int = 5,
         stage1_template: Optional[str] = None,
