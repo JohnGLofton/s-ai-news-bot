@@ -61,29 +61,29 @@ news:
 
       ## REQUIRED OUTPUT FORMAT (strict JSON):
       [
-        {
+        {{
           "category": "国际新闻",
           "items": [
-            {
+            {{
               "id": "INT-1",
               "title": "中文标题",
               "summary": "80-120字中文摘要，包含关键数据和意义",
               "source_name": "来源名称"
-            }
+            }}
           ]
-        },
-        {
+        }},
+        {{
           "category": "国内新闻",
           "items": [...]
-        },
-        {
+        }},
+        {{
           "category": "美国大学招生与国际学生",
           "items": [...]
-        },
-        {
+        }},
+        {{
           "category": "英国及国际教育新闻",
           "items": [...]
-        }
+        }}
       ]
 
       ## RULES:
