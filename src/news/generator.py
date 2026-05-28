@@ -114,6 +114,47 @@ class NewsGenerator:
 
         return formatted, news_items
 
+    def _format_digest_from_json(self, digest_json: List[Dict], news_items: Dict, language: str) -> str:
+        """
+        Format parsed JSON digest into clean markdown text.
+
+        Args:
+            digest_json: List of category dicts with 'category' and 'items' keys
+            news_items: Dict mapping news IDs to full news items (for source links)
+            language: Language code
+
+        Returns:
+            Formatted markdown string
+        """
+        output = ""
+        for category in digest_json:
+            category_name = category.get("category", "")
+            items = category.get("items", [])
+            if not category_name or not items:
+                continue
+
+            output += f"## {category_name}\n\n"
+            for item in items:
+                title = item.get("title", "")
+                summary = item.get("summary", "")
+                source_name = item.get("source_name", "")
+                news_id = item.get("id", "")
+
+                # Try to get the source link from original news data
+                source_link = ""
+                if news_id in news_items:
+                    source_link = news_items[news_id].get("link", "")
+
+                output += f"**标题**：{title}\n"
+                output += f"**摘要**：{summary}\n"
+                if source_link:
+                    output += f"**来源**：[{source_name}]({source_link})\n"
+                else:
+                    output += f"**来源**：{source_name}\n"
+                output += "\n"
+
+        return output.strip()
+
     def generate_news_digest_from_sources(
         self,
         max_tokens: int = 6000,
@@ -124,8 +165,8 @@ class NewsGenerator:
     ) -> str:
         """
         Fetch real-time news and generate a digest using two-stage prompt chaining:
-        Stage 1: Analyze and select 15-20 high-quality news items
-        Stage 2: Create detailed summaries for selected items
+        Stage 1: Analyze and select 12 high-quality news items
+        Stage 2: Create summaries for selected items (returns JSON, code formats it)
 
         Args:
             max_tokens: Maximum tokens in response
@@ -160,7 +201,7 @@ class NewsGenerator:
             logger.info(f"Starting two-stage prompt chaining with {total_items} news items")
 
             # ============================================================
-            # STAGE 1: Selection - Analyze and select 15-20 best items
+            # STAGE 1: Selection - Analyze and select 12 best items
             # ============================================================
             logger.info(f"Stage 1: Analyzing and selecting high-quality news items...")
 
@@ -189,7 +230,6 @@ class NewsGenerator:
             json_match = re.search(r'\[[\s\S]*?\]', selection_response)
             if not json_match:
                 logger.warning("Could not parse JSON from selection response, using fallback")
-                # Fallback: select first 37 items
                 selected_ids = list(news_items.keys())[:12]
             else:
                 try:
@@ -214,21 +254,19 @@ class NewsGenerator:
             logger.debug(f"Selected IDs: {selected_ids}")
 
             # ============================================================
-            # STAGE 2: Summarization - Create detailed summaries
+            # STAGE 2: Summarization - Return structured JSON
             # ============================================================
-            logger.info(f"Stage 2: Creating detailed summaries for selected items...")
+            logger.info(f"Stage 2: Creating summaries for selected items (JSON mode)...")
 
-            # Format selected news for summarization
-            formatted_selected = "# Selected High-Quality Study Abroad News Items\n\n"
+            # Format selected news for summarization - include link for each item
+            formatted_selected = "# Selected News Items\n\n"
             for news_id in selected_ids:
                 item = news_items[news_id]
                 formatted_selected += f"### [{news_id}] {item['title']}\n"
-                formatted_selected += f"**Source:** {item['source']}\n"
+                formatted_selected += f"Source: {item['source']}\n"
+                formatted_selected += f"Link: {item['link']}\n"
                 if item['description']:
-                    formatted_selected += f"**Content:** {item['description']}\n"
-                formatted_selected += f"**Link:** {item['link']}\n"
-                if item['published']:
-                    formatted_selected += f"**Published:** {item['published']}\n"
+                    formatted_selected += f"Content: {item['description']}\n"
                 formatted_selected += "\n"
 
             # Use provided template or load from config
@@ -246,13 +284,29 @@ class NewsGenerator:
             # Add language instruction if not English
             if language and language.lower() != "en":
                 language_name = LANGUAGE_NAMES.get(language.lower(), language.upper())
-                summarization_prompt += f"\n\nIMPORTANT: Please respond entirely in {language_name}."
+                summarization_prompt += f"\n\nIMPORTANT: All titles, summaries, category names, and source names must be in {language_name}."
 
-            # Execute Stage 2: Generate detailed summaries
-            # System message to suppress thinking/reasoning output
+            # System message: enforce JSON output
             system_message = {
                 "role": "system",
-                "content": "你是一名专业中文新闻编辑。直接输出最终格式化的新闻日报，禁止输出任何思考过程、推理步骤、分类逻辑或规划内容。回复必须以'## 国际新闻'开头，只包含6个分类的新闻摘要。"
+                "content": """You are a news editor. You MUST respond with ONLY a valid JSON array. No markdown, no explanation, no thinking process, no commentary. Just the JSON.
+
+Required format:
+[
+  {
+    "category": "分类名称",
+    "items": [
+      {
+        "id": "INT-1",
+        "title": "中文标题",
+        "summary": "80-120字中文摘要",
+        "source_name": "来源名称"
+      }
+    ]
+  }
+]
+
+CRITICAL: Output ONLY the JSON array. Nothing else. No ```json``` blocks. No preamble. No postamble."""
             }
             messages = [system_message, {"role": "user", "content": summarization_prompt}]
             response_text = self._generate_with_retry(
@@ -260,35 +314,31 @@ class NewsGenerator:
                 max_tokens=max_tokens
             )
 
-            # Post-process: strip thinking/reasoning that reasoning models leak into content
-            # 1. Find the first standalone "## 国际新闻" header and cut everything before it
-            #    Reasoning models may mention "## 国际新闻" in comma-separated lists during thinking,
-            #    so we match only the standalone header (end of line, not followed by comma)
-            header_pattern = r'^[\s\S]*?(?=\*{0,2}## 国际新闻\*{0,2}\s*$)'
-            match = re.search(header_pattern, response_text, re.MULTILINE)
-            if match and match.group(0).strip():
-                prefix = match.group(0).strip()
-                if prefix and not prefix.startswith('## 国际新闻'):
-                    logger.warning(f"Stripping {len(prefix)} chars of thinking/reasoning from Stage 2 response")
-                    response_text = response_text[match.end():]
+            # Parse JSON from Stage 2 response
+            # Strip any markdown code blocks the model might wrap around JSON
+            json_text = response_text.strip()
+            if json_text.startswith("```"):
+                # Remove ```json and ``` wrappers
+                json_text = re.sub(r'^```(?:json)?\s*\n?', '', json_text)
+                json_text = re.sub(r'\n?```\s*$', '', json_text)
+                json_text = json_text.strip()
 
-            # 2. Remove "*Char count*" lines that reasoning models insert
-            response_text = re.sub(r'\n\s*\*Char count[^\n]*', '', response_text)
-            # 3. Remove "*Char count check*" lines
-            response_text = re.sub(r'\n\s*\*Char count check\*[^\n]*', '', response_text)
-            # 4. Clean up bold-wrapped headers: "**## 国际新闻**" → "## 国际新闻"
-            response_text = re.sub(r'\*\*(## [^*]+)\*\*', r'\1', response_text)
-            # 5. Remove leading whitespace on each line (4-space indent from thinking)
-            lines = response_text.split('\n')
-            cleaned_lines = []
-            for line in lines:
-                # Strip leading 4+ spaces that come from indented thinking output
-                if line.startswith('    '):
-                    line = line.lstrip()
-                cleaned_lines.append(line)
-            response_text = '\n'.join(cleaned_lines)
-            # 6. Remove multiple consecutive blank lines
-            response_text = re.sub(r'\n{3,}', '\n\n', response_text)
+            # Find JSON array in response (model may prepend thinking)
+            json_match = re.search(r'\[[\s\S]*\]', json_text)
+            if json_match:
+                try:
+                    digest_json = json.loads(json_match.group(0))
+                    logger.info(f"Stage 2 JSON parsed successfully: {len(digest_json)} categories")
+
+                    # Format the parsed JSON into clean markdown
+                    response_text = self._format_digest_from_json(digest_json, news_items, language)
+                except json.JSONDecodeError as e:
+                    logger.warning(f"Stage 2 JSON parse error: {e}, falling back to raw text cleanup")
+                    # Fallback: try to extract content after thinking
+                    response_text = self._fallback_clean_response(response_text)
+            else:
+                logger.warning("No JSON array found in Stage 2 response, falling back to raw text cleanup")
+                response_text = self._fallback_clean_response(response_text)
 
             # Footer is now handled by the email HTML template, no need to add it here
 
@@ -301,3 +351,33 @@ class NewsGenerator:
         except Exception as e:
             logger.error(f"Failed to generate news digest from sources: {str(e)}", exc_info=True)
             raise
+
+    def _fallback_clean_response(self, text: str) -> str:
+        """Fallback: try to clean thinking/reasoning from raw text response."""
+        # Find the first category header and cut everything before it
+        header_pattern = r'^[\s\S]*?(?=\*{0,2}## [\u4e00-\u9fff])'
+        match = re.search(header_pattern, text, re.MULTILINE)
+        if match and match.group(0).strip():
+            prefix = match.group(0).strip()
+            if prefix and not prefix.startswith('##'):
+                logger.warning(f"Fallback: stripping {len(prefix)} chars of thinking/reasoning")
+                text = text[match.end():]
+
+        # Remove various thinking artifacts
+        text = re.sub(r'\n\s*\*Char count[^\n]*', '', text)
+        text = re.sub(r'\n\s*\*Char count check\*[^\n]*', '', text)
+        text = re.sub(r'\*\*(## [^*]+)\*\*', r'\1', text)
+
+        # Remove leading 4+ space indent
+        lines = text.split('\n')
+        cleaned_lines = []
+        for line in lines:
+            if line.startswith('    '):
+                line = line.lstrip()
+            cleaned_lines.append(line)
+        text = '\n'.join(cleaned_lines)
+
+        # Remove multiple consecutive blank lines
+        text = re.sub(r'\n{3,}', '\n\n', text)
+
+        return text

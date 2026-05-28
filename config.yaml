@@ -44,68 +44,55 @@ news:
 
       CRITICAL: You MUST select exactly 12 items total, with items spread across ALL 6 categories.
 
-  # Stage 2: Summarization prompt template
+  # Stage 2: Summarization prompt template (JSON output mode)
   # Placeholders: {count}, {selected_news}
   stage2_prompt_template: |
       {selected_news}
 
-      ## YOUR TASK - STAGE 2: NEWS DIGEST IN CHINESE
+      ## YOUR TASK - STAGE 2: SUMMARIZE IN JSON FORMAT
 
-      Create a concise Chinese news digest for the {count} news items above.
+      Create summaries for the {count} news items above. You MUST respond with ONLY a JSON array. No markdown formatting, no explanation, no thinking, no commentary.
 
-      ## OUTPUT STRUCTURE:
+      ## CATEGORIES (use these exact Chinese names):
+      - "国际新闻" (2 items: global politics/finance/technology)
+      - "国内新闻" (2 items: China domestic politics/economy/technology)
+      - "美国大学招生与国际学生" (4 items: US universities, international admissions, IELTS/TOEFL/SAT/ACT)
+      - "英国及国际教育新闻" (4 items: UK universities, visa policy, rankings, scholarships, other education)
 
-      Organize ALL news items into these exact 4 categories with these exact headers (NO item count in brackets):
+      ## REQUIRED OUTPUT FORMAT (strict JSON):
+      [
+        {
+          "category": "国际新闻",
+          "items": [
+            {
+              "id": "INT-1",
+              "title": "中文标题",
+              "summary": "80-120字中文摘要，包含关键数据和意义",
+              "source_name": "来源名称"
+            }
+          ]
+        },
+        {
+          "category": "国内新闻",
+          "items": [...]
+        },
+        {
+          "category": "美国大学招生与国际学生",
+          "items": [...]
+        },
+        {
+          "category": "英国及国际教育新闻",
+          "items": [...]
+        }
+      ]
 
-      ## 国际新闻
-      ## 国内新闻
-      ## 美国大学招生与国际学生
-      ## 英国及国际教育新闻
-
-      Category guidelines:
-      - 国际新闻: 2 items - global politics, finance, technology headline news (not required to be study-abroad related)
-      - 国内新闻: 2 items - China domestic headline news (politics, economy, technology)
-      - 美国大学招生与国际学生: 4 items - famous US university news, international admissions, IELTS/TOEFL/SAT/ACT/Duolingo
-      - 英国及国际教育新闻: 4 items - famous UK university news, visa policy, immigration, rankings, scholarships, other education news
-
-      ## ABSOLUTE RULES (READ CAREFULLY):
-      - **DO NOT output any thinking, reasoning, analysis, categorization logic, or planning process**
-      - **DO NOT output numbered thinking steps like "1. Analyze..." or "2. Categorize..."**
-      - **OUTPUT ONLY the final formatted news digest, nothing else**
-      - **Start your response immediately with "## 国际新闻"**
-      - ALL 4 category headers MUST appear in the output, even if items are scarce
-      - If a category has fewer items than the target, summarize ALL available items for that category (do NOT write "暂无" or skip it)
-      - Redistribute any extra items from one category to fill another if needed
-      - NEVER leave a category section empty - always include at least 1 news item under each header
-
-      ## CONTENT REQUIREMENTS:
-
-      For each news item provide:
-      1. **标题**: Clear Chinese headline
-      2. **摘要**: 80-120 Chinese characters summary covering: what happened, key data/numbers, why it matters
-      3. **来源**: [来源名称](URL)
-
-      ## WRITING STYLE:
+      ## RULES:
+      - Output ONLY the JSON array, nothing else
+      - All 4 categories MUST appear, each with its items
+      - Each summary: 80-120 Chinese characters
+      - Include the original news ID in "id" field
       - All content in Chinese
-      - Summaries must be 80-120 Chinese characters (strictly enforced, keep it concise)
-      - Include specific numbers, dates, policy names when available
-      - Student-oriented perspective
-
-      ## QUALITY REQUIREMENTS:
-      - ✅ Summarize ALL {count} items (no skipping)
-      - ✅ Each summary strictly 80-120 Chinese characters
-      - ✅ All sources as clickable markdown links
-      - ✅ Use all 4 category headers exactly as written above
-      - ✅ NO item count numbers in category headers
-
-      ## AVOID:
-      ❌ Summaries outside 80-120 character range
-      ❌ Missing clickable links
-      ❌ Skipping any news items
-      ❌ Adding count numbers like （5条） to headers
-      ❌ Adding extra categories
-      ❌ Writing "暂无相关新闻" or leaving any category empty
-      ❌ ANY thinking/reasoning/planning/categorization notes
+      - No item count in category names
 
 logging:
   level: INFO
