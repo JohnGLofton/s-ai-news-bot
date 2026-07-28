@@ -230,25 +230,26 @@ class NewsGenerator:
             json_match = re.search(r'\[[\s\S]*?\]', selection_response)
             if not json_match:
                 logger.warning("Could not parse JSON from selection response, using fallback")
-                selected_ids = list(news_items.keys())[:12]
+                selected_ids = list(news_items.keys())[:24]
             else:
                 try:
                     selected_ids = json.loads(json_match.group(0))
                     # Validate IDs
                     selected_ids = [id for id in selected_ids if id in news_items]
 
-                    # Ensure we have 12 items (target is 12)
-                    if len(selected_ids) < 12:
-                        logger.warning(f"Only {len(selected_ids)} items selected, adding more")
+                    # Target is 24 items (4+4+8+8)
+                    target_count = 24
+                    if len(selected_ids) < target_count:
+                        logger.warning(f"Only {len(selected_ids)} items selected, adding more to reach {target_count}")
                         remaining = [id for id in news_items.keys() if id not in selected_ids]
-                        selected_ids.extend(remaining[:12 - len(selected_ids)])
-                    elif len(selected_ids) > 15:
-                        logger.warning(f"{len(selected_ids)} items selected, trimming to 12")
-                        selected_ids = selected_ids[:12]
+                        selected_ids.extend(remaining[:target_count - len(selected_ids)])
+                    elif len(selected_ids) > target_count + 4:
+                        logger.warning(f"{len(selected_ids)} items selected, trimming to {target_count}")
+                        selected_ids = selected_ids[:target_count]
 
                 except json.JSONDecodeError:
                     logger.warning("JSON parse error, using fallback selection")
-                    selected_ids = list(news_items.keys())[:12]
+                    selected_ids = list(news_items.keys())[:24]
 
             logger.info(f"Stage 1 completed: Selected {len(selected_ids)} news items")
             logger.debug(f"Selected IDs: {selected_ids}")
