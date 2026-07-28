@@ -44,55 +44,39 @@ news:
 
       CRITICAL: You MUST select exactly 12 items total, with items spread across ALL 6 categories.
 
-  # Stage 2: Summarization prompt template (JSON output mode)
+  # Stage 2: Summarization prompt template (Markdown output mode)
   # Placeholders: {count}, {selected_news}
   stage2_prompt_template: |
       {selected_news}
 
-      ## YOUR TASK - STAGE 2: SUMMARIZE IN JSON FORMAT
+      ## YOUR TASK - STAGE 2: CREATE A NEWS DIGEST
 
-      Create summaries for the {count} news items above. You MUST respond with ONLY a JSON array. No markdown formatting, no explanation, no thinking, no commentary.
+      Create a well-formatted study abroad news digest from the {count} news items above. Output in Markdown format.
 
-      ## CATEGORIES (use these exact Chinese names):
+      ## CATEGORIES (use these exact Chinese names as section headings):
       - "国际新闻" (2 items: global politics/finance/technology)
       - "国内新闻" (2 items: China domestic politics/economy/technology)
       - "美国大学招生与国际学生" (4 items: US universities, international admissions, IELTS/TOEFL/SAT/ACT)
       - "英国及国际教育新闻" (4 items: UK universities, visa policy, rankings, scholarships, other education)
 
-      ## REQUIRED OUTPUT FORMAT (strict JSON):
-      [
-        {{
-          "category": "国际新闻",
-          "items": [
-            {{
-              "id": "INT-1",
-              "title": "中文标题",
-              "summary": "80-120字中文摘要，包含关键数据和意义",
-              "source_name": "来源名称"
-            }}
-          ]
-        }},
-        {{
-          "category": "国内新闻",
-          "items": [...]
-        }},
-        {{
-          "category": "美国大学招生与国际学生",
-          "items": [...]
-        }},
-        {{
-          "category": "英国及国际教育新闻",
-          "items": [...]
-        }}
-      ]
+      ## REQUIRED OUTPUT FORMAT:
+      Each category should be a Markdown section with bold titles and summaries.
+
+      Example:
+      ## 国际新闻
+
+      **标题**：新闻标题
+      **摘要**：新闻摘要内容（80-120字）
+      **来源**：[来源名称](来源链接)
 
       ## RULES:
-      - Output ONLY the JSON array, nothing else
-      - All 4 categories MUST appear, each with its items
+      - Output ONLY Markdown, nothing else
+      - All 4 categories MUST appear
       - Each summary: 80-120 Chinese characters
-      - Include the original news ID in "id" field
       - All content in Chinese
-      - No item count in category names
+      - Use ## for category headings
+      - Bold titles with **
+      - Include source links
 
 logging:
   level: INFO
