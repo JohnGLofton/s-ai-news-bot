@@ -286,27 +286,19 @@ class NewsGenerator:
                 language_name = LANGUAGE_NAMES.get(language.lower(), language.upper())
                 summarization_prompt += f"\n\nIMPORTANT: All titles, summaries, category names, and source names must be in {language_name}."
 
-            # System message: enforce JSON output
+            # System message: enforce Markdown output directly
             system_message = {
                 "role": "system",
-                "content": """You are a news editor. You MUST respond with ONLY a valid JSON array. No markdown, no explanation, no thinking process, no commentary. Just the JSON.
+                "content": """You are a news editor. Respond with a well-formatted Markdown news digest. No JSON, no explanation, no thinking process, no commentary. Just the Markdown.
 
 Required format:
-[
-  {
-    "category": "分类名称",
-    "items": [
-      {
-        "id": "INT-1",
-        "title": "中文标题",
-        "summary": "80-120字中文摘要",
-        "source_name": "来源名称"
-      }
-    ]
-  }
-]
+## Category Name
 
-CRITICAL: Output ONLY the JSON array. Nothing else. No ```json``` blocks. No preamble. No postamble."""
+**标题**：News Title
+**摘要**：80-120 word analytical summary
+**来源**：[Source Name](https://source.url)
+
+CRITICAL: Output ONLY the Markdown digest. Nothing else. No ```markdown``` blocks. No preamble. No postamble. Each news item must have exactly 3 lines: title, summary, source."""
             }
             messages = [system_message, {"role": "user", "content": summarization_prompt}]
             response_text = self._generate_with_retry(
@@ -314,37 +306,16 @@ CRITICAL: Output ONLY the JSON array. Nothing else. No ```json``` blocks. No pre
                 max_tokens=max_tokens
             )
 
-            # Parse JSON from Stage 2 response
-            # Strip any markdown code blocks the model might wrap around JSON
-            json_text = response_text.strip()
-            if json_text.startswith("```"):
-                # Remove ```json and ``` wrappers
-                json_text = re.sub(r'^```(?:json)?\s*\n?', '', json_text)
-                json_text = re.sub(r'\n?```\s*$', '', json_text)
-                json_text = json_text.strip()
+            # Clean up any markdown code block wrappers
+            cleaned = response_text.strip()
+            if cleaned.startswith("```"):
+                cleaned = re.sub(r'^```(?:markdown)?\s*\n?', '', cleaned)
+                cleaned = re.sub(r'\n?```\s*$', '', cleaned)
+                cleaned = cleaned.strip()
+            response_text = cleaned
 
-            # Find JSON array in response (model may prepend thinking)
-            json_match = re.search(r'\[[\s\S]*\]', json_text)
-            if json_match:
-                try:
-                    digest_json = json.loads(json_match.group(0))
-                    logger.info(f"Stage 2 JSON parsed successfully: {len(digest_json)} categories")
-
-                    # Format the parsed JSON into clean markdown
-                    response_text = self._format_digest_from_json(digest_json, news_items, language)
-                except json.JSONDecodeError as e:
-                    logger.warning(f"Stage 2 JSON parse error: {e}, falling back to raw text cleanup")
-                    # Fallback: try to extract content after thinking
-                    response_text = self._fallback_clean_response(response_text)
-            else:
-                logger.warning("No JSON array found in Stage 2 response, falling back to raw text cleanup")
-                response_text = self._fallback_clean_response(response_text)
-
-            # Footer is now handled by the email HTML template, no need to add it here
-
-            logger.info("Stage 2 completed: News digest generated successfully")
-            logger.info(f"Two-stage prompt chaining completed: {total_items} items → {len(selected_ids)} selected → full digest")
-            logger.debug(f"Response length: {len(response_text)} characters")
+            logger.info(f"Stage 2 completed: News digest generated successfully ({len(response_text)} chars)")
+            logger.debug(f"Response preview: {response_text[:200]}...")
 
             return response_text
 
