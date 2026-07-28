@@ -6,7 +6,7 @@ llm:
 
 news:
   enable_web_search: false
-  max_items_per_source: 10
+  max_items_per_source: 20
 
   # Stage 1: Selection prompt template
   # Placeholders: {total_items}, {formatted_news}
@@ -15,34 +15,29 @@ news:
 
       ## YOUR TASK - STAGE 1: NEWS SELECTION
 
-      You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 12 of the highest-quality items.
+      You are a senior news editor and international education consultant. Analyze the {total_items} news items above and select exactly 24 of the highest-quality items.
 
       ### MANDATORY SELECTION TARGETS BY CATEGORY:
-      - Exactly 2 items: Major international headline news (global politics, finance, technology - NOT study-abroad related)
-      - Exactly 2 items: Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
-      - Exactly 4 items: US university news - US universities, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
-      - Exactly 2 items: UK university news - UK universities (Oxford, Cambridge, Imperial, UCL, LSE etc.), UK international students, UK education policy
-      - Exactly 1 item: Study abroad visa and immigration policy news (F1 visa, OPT, UK student visa, Australia/Canada study permit)
-      - Exactly 1 item: Other international education headline news (rankings, scholarships, non-US/UK universities)
+      - Exactly 4 items: 国际新闻 - Major international headline news (global politics, finance, technology - NOT study-abroad related)
+      - Exactly 4 items: 国内新闻 - Major China domestic headline news (politics, economy, technology, society - NOT study-abroad related)
+      - Exactly 8 items: 美国大学招生与国际学生 - US universities, international student admissions, IELTS/TOEFL/SAT/ACT/Duolingo test news
+      - Exactly 8 items: 英国及国际教育新闻 - UK universities (Oxford, Cambridge, Imperial, UCL, LSE etc.), UK international students, UK education policy, study abroad visa/immigration, rankings, scholarships, non-US/UK universities
 
       ### CRITICAL RULES:
       - For 国际新闻: select general world news ONLY (NOT education/study abroad)
       - For 国内新闻: select China domestic news ONLY (NOT education/study abroad)
       - Do NOT put the same news in multiple categories
       - You MUST fill each category even if you need to use loosely related items
-      - For UK category: use ANY news from UK sources (BBC, Guardian, TES, Wonkhe) or mentioning UK universities
-      - For Visa category: use ANY news about immigration, visa policy, OPT, work permits for students
-      - For Other Education: use rankings, scholarships, non-US/UK study destinations, education technology
       - If a category has fewer ideal matches, pick the closest available items from the news pool
       - Prioritize headline, trending, and breaking news
 
       ### OUTPUT FORMAT:
-      Return ONLY a JSON array of exactly 12 selected news IDs. No explanations, no markdown, just the JSON array.
+      Return ONLY a JSON array of exactly 24 selected news IDs. No explanations, no markdown, just the JSON array.
 
       Example format:
-      ["INT-1", "INT-5", "DOM-2", "INT-12", ...]
+      ["INT-1", "INT-3", "DOM-2", ...]
 
-      CRITICAL: You MUST select exactly 12 items total, with items spread across ALL 6 categories.
+      CRITICAL: You MUST select exactly 24 items total, with items spread across ALL 4 categories.
 
   # Stage 2: Summarization prompt template (Markdown output mode)
   # Placeholders: {count}, {selected_news}
@@ -54,10 +49,10 @@ news:
       Create a well-formatted study abroad news digest from the {count} news items above. Output in Markdown format.
 
       ## CATEGORIES (use these exact Chinese names as section headings):
-      - "国际新闻" (2 items: global politics/finance/technology)
-      - "国内新闻" (2 items: China domestic politics/economy/technology)
-      - "美国大学招生与国际学生" (4 items: US universities, international admissions, IELTS/TOEFL/SAT/ACT)
-      - "英国及国际教育新闻" (4 items: UK universities, visa policy, rankings, scholarships, other education)
+      - "国际新闻" (4 items: global politics/finance/technology)
+      - "国内新闻" (4 items: China domestic politics/economy/technology)
+      - "美国大学招生与国际学生" (8 items: US universities, international admissions, IELTS/TOEFL/SAT/ACT)
+      - "英国及国际教育新闻" (8 items: UK universities, visa policy, rankings, scholarships, other education)
 
       ## REQUIRED OUTPUT FORMAT:
       Each category should be a Markdown section with bold titles and summaries.
