@@ -157,7 +157,7 @@ class NewsGenerator:
 
     def generate_news_digest_from_sources(
         self,
-        max_tokens: int = 6000,
+        max_tokens: int = 10000,
         language: str = "en",
         max_items_per_source: int = 5,
         stage1_template: Optional[str] = None,
@@ -218,7 +218,7 @@ class NewsGenerator:
             )
 
             messages = [
-                {"role": "system", "content": "You are a news selection assistant. Return ONLY a JSON array of news IDs. No explanations, no thinking process, no analysis. Example: [\"INT-1\", \"INT-5\", \"DOM-2\"]"},
+                {"role": "system", "content": "You are a news selection assistant. Your response must contain a JSON array of selected news IDs. Wrap the JSON in ```json ... ``` code blocks if needed. Example: [\"INT-1\", \"INT-5\", \"DOM-2\"]"},
                 {"role": "user", "content": selection_prompt}
             ]
             selection_response = self._generate_with_retry(
